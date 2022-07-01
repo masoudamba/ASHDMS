@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 
 	<style>
 	    /* Full-width input fields */
-input[type=text], input[type=password],input[type=phone],input[type=email]{
+input[type=text], input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -79,13 +80,13 @@ span.psw {
 }
 /* The Modal (background) */
 .modal {
-  display: flex; /* Hidden by default */
-  position: absolute; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: flex; 
+  position: absolute; 
+  z-index: 1; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  width: 100%; 
+  height: 100%; 
   
   padding-top: 60px;
 }
@@ -96,12 +97,12 @@ span.psw {
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 10%; /* Could be more or less, depending on screen size */
 }
 	</style>
     </head>
     <body>
-    <section class="main" style="background-image: url(images/slider3.jpg);">
+    <section class="main" style="background-image: url(images/slider1.jpg);">
         
         <nav>
             <a href="#" class="logo">
@@ -114,62 +115,48 @@ span.psw {
 </section>
 
 	
-    <!-- register modal start -->
-    <div class = "modal">
-        <form  action="register_check.php" method="post"style="
+        <!-- login modal start -->
+        <div  class="modal">
+  
+            <form  action="login_check.php" method="post" style="
             width: 400px;
         ">
               <div class="imgcontainer">
-                
-                <p style="font-size: 22px;">fill up the form based on role: </p>
+            
+                <p style="font-size: 22px;">Login to your account on: </p>
                 <hr>
               </div>
-    <div class="container">
-    <label for="firstname"><b>First Name</b></label>
-    <input type ="text" placeholder="firstname" name="firstname" required>
-
-    <label for="lastname"><b>Last Name</b></label>
-    <input type="text" placeholder="lastname" name="lastname" required>
-
-    <label for="TSCNo"><b>TSC Number</b></label>
-    <input type="text" placeholder="Enter TAC Number" name="TSCNo" required>
-         
-    <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="name@gmail.com" name="email" required>
-
-    <label for="phone"><b>Phone Number</b></label>
-    <input type="phone" placeholder="Enter phone" name="phone" required>
-
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="At least 8 characters" name="psw" required>
-        
-    <label for="pswC"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Same as password above" name="pswC" required>
-    
-    <button type="submit">register</button>
-    
-        <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
+          
+              <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+          
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="At least 8 characters" name="psw" required>
+                Choose Role:<select name="Role" id="Role">
+                     <option value="Admin">Admin</option>
+                     <option value="Teacher">Teacher</option>
+                     <option value="Parent">Parent</option>
+              </select>
+                  
+                  
+                <button type="submit">Login</button>
+                <label>
+                  <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
               </div>
           
               <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('id02').style.display='none'"
-                 class="cancelbtn">Cancel</button>
-                <span class="psw"><a href="login.php">Login Here</a></span>
-                <span class="psw" style="margin-right: 11px;"><a href="#">Already have Account?</a></span>
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" 
+                class="cancelbtn">Cancel</button>
+                <span class="psw"><a href="register.php">Register Here</a></span>
+                <span class="psw" style="margin-right: 11px;"><a href="#">Don't have Account?</a></span>
               </div>
-  </div>
-</div>
-</div>
-</form>
-</div>
- <!-- register modal end  -->
-     <!--footer------------->
-     <footer>
+            </form>
+          </div>
+        <!-- login modal end  -->
+            <!--footer------------->
+    <footer>
       <div class="copywrite-area">
         <div class="container">
           <div class="copywrite-text">
@@ -186,6 +173,5 @@ span.psw {
         </div>
       </div>
     </footer>
-
 </body>
 </html>
