@@ -1,5 +1,4 @@
 
-
 <!doctype html>
 <html>
 <head>
@@ -8,6 +7,8 @@
 <meta name="viewport" content="width=device-width, intial-scale=1.0">
 <title>ASH Discipline Monitoring System</title>
 <link rel="stylesheet" href="css/123.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+ rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <!--fav-icon-->
 <link rel="shortcut icon" href="images/download.png"/>
 
@@ -49,6 +50,7 @@ button:hover {
   text-align: center;
   margin: 24px 0 12px 0;
   position: relative;
+  justify-content: center;
 }
 /* The Close Button (x) */
 .close {
@@ -73,6 +75,7 @@ img.avatar {
 
 .container {
   padding: 16px;
+  justify-content: center;
 }
 span.psw {
   float: right;
@@ -81,14 +84,14 @@ span.psw {
 /* The Modal (background) */
 .modal {
   display: flex; 
-  position: absolute; 
+  position: fixed; 
   z-index: 1; 
   left: 0;
   top: 0;
   width: 100%; 
   height: 100%; 
-  
-  padding-top: 60px;
+  justify-content: center;
+  padding-top: 0px;
 }
 
 /* Modal Content/Box */
@@ -123,9 +126,13 @@ span.psw {
         ">
               <div class="imgcontainer">
             
-                <p style="font-size: 22px;">Login to your account on: </p>
-                <hr>
+                <p style="font-size: 22px;">Login to your account by: </p>  
               </div>
+              <?php if(isset($_GET['error'])) { ?>
+              <div class="alert alert-danger" role="alert">
+                <?=$_GET['error']?>
+            </div>
+             <?php } ?>
           
               <div class="container">
                 <label for="uname"><b>Username</b></label>
@@ -133,7 +140,11 @@ span.psw {
           
                 <label for="psw"><b>Password</b></label>
                 <input type="password" placeholder="At least 8 characters" name="psw" required>
-                Choose Role:<select name="Role" id="Role">
+                <div class="mb-1">
+                <label for ="role"><b>Choose Role</b></label></div>
+                <select class="form-select mb-3="
+                name="role"
+                arial-label="Default select example">
                      <option value="Admin">Admin</option>
                      <option value="Teacher">Teacher</option>
                      <option value="Parent">Parent</option>
@@ -147,8 +158,8 @@ span.psw {
               </div>
           
               <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('id01').style.display='none'" 
-                class="cancelbtn">Cancel</button>
+              <a href = "index.php"><button type="button" onclick="document.getElementById('id01').style.display='none'" 
+                class="cancelbtn">Cancel</button></a>
                 <span class="psw"><a href="register.php">Register Here</a></span>
                 <span class="psw" style="margin-right: 11px;"><a href="#">Don't have Account?</a></span>
               </div>

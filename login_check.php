@@ -3,56 +3,73 @@
 session_start();
 
 	include("config.php");
-	include("function.php");
+	//include("function.php");
 
 
-    if (isset($_POST['uname']) && isset($_POST['psw'])) {
+    if (isset($_POST['uname']) && isset($_POST['psw']) && isset($_POST['role'])) {
 
         function validate($data){
-           $data = trim($data);
-           $data = stripslashes($data);
-           $data = htmlspecialchars($data);
-           return $data;
-        }
-    
-        $uname = validate($_POST['uname']);
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+         }
+         $uname = validate($_POST['uname']);
         $psw = validate($_POST['psw']);
-    
+        $role = validate($_POST['role']);
+
+        
         if (empty($uname)) {
             header("Location: login.php?error=User Name is required");
-            exit();
-        }else if(empty($pass)){
-            header("Location: login.php?error=Password is required");
-            exit();
-        }else{
-            // hashing the password
-            $pass = md5($psw);
-    
             
-            $query = "SELECT * FROM staff WHERE user_name='$uname' AND password='$psw'";
-    
+        }elseif(empty($psw)){
+            header("Location: login.php?error=Password is required");
+            
+        }else{
+            $psw = md5($psw);
+             
+            $query = "SELECT * FROM users WHERE user_name='$uname' AND password='$psw'";
             $result = mysqli_query($con, $query);
-    
+
+            
             if (mysqli_num_rows($result) === 1) {
                 $row = mysqli_fetch_assoc($result);
-                if ($row['user_name'] === $uname && $row['password'] === $psw) {
-                    $_SESSION['user_name'] = $row['user_name'];
-                    $_SESSION['name'] = $row['name'];
-                    $_SESSION['id'] = $row['id'];
-                    header("Location: welcome.php");
-                    exit();
+                if ($row['password'] === $psw) {
+                    //$row['password'] === $psw && $row['role'] === $role
+                    if($row['role'] != $role){
+                        if($role === 'Admin'){
+                            header("Location: login.php?error=You are not an Admin!");
+                        }
+                        //echo 'Role not matching!';
+                    }else{
+                        $_SESSION['name'] = $row['name'];
+                        $_SESSION['id'] = $row['id'];
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['uname'] = $row['uname'];
+
+
+                        if($row['role'] === 'Teacher'){
+                            header("Location: teacher.php");
+                        }else if($row['role']==='Admin'){
+                            header("Location: admin.php");
+                        }else{
+                            header("Location: parent.php");
+                        }
+
+
+                    }
+
                 }else{
                     header("Location: login.php?error=Incorect User name or password");
-                    exit();
                 }
+                    
             }else{
                 header("Location: login.php?error=Incorect User name or password");
-                exit();
-            }
+            }    
+                    
         }
-        
+
     }else{
-        header("Location: login.php");
-        exit();
+        header("location:login.php");
     }
 ?>

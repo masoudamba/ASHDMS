@@ -1,12 +1,3 @@
-<?php 
-session_start();
-
-	include("config.php");
-	include("function.php");
-
-	$user_data = check_login($con);
-
-?>
 
 <!doctype html>
 <html>
@@ -19,7 +10,7 @@ session_start();
 <!--fav-icon-->
 <link rel="shortcut icon" href="images/download.png"/>
 <style>
-
+   
 .list{
   
   justify-content: left;
@@ -27,6 +18,7 @@ session_start();
   text-align: start;
   
 }
+
 
 /* Add Zoom Animation */
 .animate {
@@ -44,17 +36,16 @@ session_start();
   to {transform: scale(1)}
 }
 
-
 </style>
 </head>
 
 <body>
-    
+
     <section class="main" style="background-image: url(images/slider1.jpg);">
         
         <nav>
             <a href="#" class="logo">
-                <img src="images/logo.jpg" width="84px" title="ASH Discipline Monotoring System" alt="ASH Discipline Monotoring System"/>
+                <img src="images/logo.jpg" width="84px"/>
             </a>
             <input class="menu-btn" type="checkbox" id="menu-btn"/>
             <label class="menu-icon" for="menu-btn">
@@ -65,12 +56,12 @@ session_start();
                 <li><a href="#">Infraction</a></li>
                 <li><a href="#">Penalty</a></li>
                 <li><a href="#">Served Cases</a></li>
-                 <li><a href="logout.php">Logout</a>
-               
+                <li><a href="login.php">login</a></li>
+                <li><a href="register.php">Signup</a></li>
+                
             </ul>
         </nav>
-       
-      
+     
 
         <!--main-content-->
         <div class="home-content">
@@ -129,7 +120,7 @@ session_start();
                 <p>Always ensure proper utilisation of workforce and materials for effective and 
                   well-organised teaching, learning and dicipline monitoring in the school.</p>
                 <!--btn--------->
-                <a href="admin.php">Manage Here</a>
+                <a href="login.php">Manage Here</a>
             </div>
             <!--box-2-------->
             <div class="box">
@@ -139,7 +130,7 @@ session_start();
                   not who they are supposed to be, not who the community says they are, but who they are.
                 </p>
                 <!--btn--------->
-                <a href="teacher.php">Access Here</a>
+                <a href="login.php">Access Here</a>
             </div>
             <!--box-3-------->
             <div class="box">
@@ -149,7 +140,7 @@ session_start();
                   children who have better moral development, compared to children whose parents
                 use authoritarian methods and punishment.  </p>
                 <!--btn--------->
-                <a href="parent.php">Your Duty</a>
+                <a href="login.php">Your Duty</a>
             </div>
            
             <!--box-1-------->
@@ -175,19 +166,8 @@ session_start();
         </div>
       </div>
     </footer>
-    <script>
-        // Get the modal
-        var modal = document.getElementById('id01');
-        var modal = document.getElementById('id02');
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                // modal.style.display = "none"; 
-            }
-           
-        }
-        </script>
+   
 </body>
 
 </html>
+

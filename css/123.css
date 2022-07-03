@@ -28,6 +28,7 @@ input{
 }
 .logo img{
     height: 80px;
+    display: flex;
 }
 nav{
     display: flex;
