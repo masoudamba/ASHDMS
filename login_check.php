@@ -47,13 +47,14 @@ session_start();
                         $_SESSION['role'] = $row['role'];
                         $_SESSION['uname'] = $row['uname'];
 
-
+                        $idd = $row['id'];
+                        $row_encoded = json_encode($row);
                         if($row['role'] === 'Teacher'){
-                            header("Location: teacher.php");
+                            header("Location: teacher.php?details='$idd'");
                         }else if($row['role']==='Admin'){
-                            header("Location: admin.php");
+                            header("Location: admin.php?details=$row_encoded");
                         }else{
-                            header("Location: parent.php");
+                            header("Location: parent.php?details='$idd'");
                         }
 
 

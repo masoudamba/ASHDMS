@@ -30,6 +30,7 @@ input{
     height: 80px;
     display: flex;
 }
+
 nav{
     display: flex;
     align-items: center;

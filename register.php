@@ -190,7 +190,7 @@ span.psw {
     <input type="password" placeholder="At least 8 characters" name="psw" required>
         
     <label for="pswC"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Same as password above" name="pswC" required>
+    <input type="password" placeholder="Confirm Password" name="pswC" required>
     
     <button type="submit" >Register</button>
     

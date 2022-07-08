@@ -9,7 +9,7 @@ if($result){
                     window.location.href= "admin.phhp"</script>
                     <?php
                     
-                }elseif($Role==teacher){
+                }elseif($Role==='teacher'){
                     ?>
                    <script type = "text/javascript">
                     window.location.href= "teacher.phhp"</script>

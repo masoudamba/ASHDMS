@@ -35,6 +35,21 @@
   from {transform: scale(0)} 
   to {transform: scale(1)}
 }
+.dropdown {
+  
+  display: inline-block;
+  cursor: pointer;
+  display:none;
+  transition-duration: 500ms
+  text-transform: uppercase;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 768px
+  max-width: 991px
+  padding: 0 20px;
+  z-index: 1;
+}
+
 
 </style>
 </head>
@@ -52,8 +67,18 @@
                 <span class="nav-icon"></span>
             </label>
             <ul class="menu" style="border-radius: 5px;">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Infraction</a></li>
+                <li><a href="#">Action</a>
+                <ul class="dropdown">
+                  <li><a href="#">Verbal Warning</a></li>
+                  <li><a href="#">Detention</a></li>
+                  <li><a href="#">Phone call to parent</a></li>
+                  <li><a href="#">Written note to parent</a></li>
+                  <li><a href="#">Assignment of writing a reflective summary of behavior</a></li>
+                  </ul>
+              </li>
+                <li><a href="#">Infraction</a>
+              
+              </li>
                 <li><a href="#">Penalty</a></li>
                 <li><a href="#">Served Cases</a></li>
                 <li><a href="login.php">login</a></li>
