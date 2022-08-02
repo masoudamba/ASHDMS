@@ -11,22 +11,54 @@ $teacherID = $roww;
  $sql_cases = "SELECT * FROM cases WHERE teacher_id = $teacherID";
  //$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
 
- $qry1 = mysqli_query($con, $sql_cases);
- $qryProfile = mysqli_query($con, $sql_cases);
+ $sql_students = "SELECT * FROM students";
+
+ $indexStudent = 0;
+ $qryStudents;
+ $val_students;
+ $options_students = array();
+
+ try {
+    //code...
+    $qryStudents = mysqli_query($con, $sql_students);   
+   
+   while($tichaStudent = mysqli_fetch_assoc($qryStudents)){
+       //$valEcho = json_encode($ticha);
+       $options_students[$indexStudent] = $tichaStudent;
+       $indexStudent = $indexStudent+1;
+       
+   }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+
+ $qry1;
+ $qryProfile;
  $index_cases = 0;
  $index = 0;
  $options_profiles = array();
  $val_profiles;
  $options = array();
 
-
-
-while($ticha = mysqli_fetch_assoc($qry1)){
-    //$valEcho = json_encode($ticha);
-    $options[$index] = $ticha;
-    $index = $index+1;
+ try {
+    //code...
+    $qry1 = mysqli_query($con, $sql_cases);
+    $qryProfile = mysqli_query($con, $sql_cases);
     
-}
+   
+   
+   
+   while($ticha = mysqli_fetch_assoc($qry1)){
+       //$valEcho = json_encode($ticha);
+       $options[$index] = $ticha;
+       $index = $index+1;
+       
+   }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+
+
 
  try {
     //code...
@@ -183,6 +215,7 @@ button:hover {
   text-align: center;
   margin: 24px 0 12px 0;
   position: relative;
+  justify-content: center;
 }
 /* The Close Button (x) */
 .close {
@@ -207,32 +240,23 @@ img.avatar {
 
 .container {
   padding: 16px;
+  background-color:#006666;
 }
-span.psw {
-  float: center;
-  padding-top: 10px;
-}
+
 /* The Modal (background) */
 .modal {
   display: flex; /* Hidden by default */
   position: absolute; 
-  z-index: 0; /* Sit on top */
+  z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; 
   height: 100%; 
   justify-content: center;
   padding-top: 60px;
+  font-size: 17px;
 }
 
-/* Modal Content/Box */
-.modal-content {
-    width: 400px;
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
 
 /* This end of the style of new case form */
 
@@ -311,6 +335,50 @@ span.psw {
 
 <title>ASH Discipline Monitoring System</title>
 <script>
+    var ID_user = 0;
+
+    function setIDUser(id,students){
+        //alert(id);
+        try {
+            ID_user = id;
+        } catch (error) {
+            console.log(error);
+        }
+
+        populateStudentsNewCase(students);
+        
+    }
+
+    function populateStudentsNewCase(studentArray){
+
+        try {
+            
+            //var element3 = document.createElement("select");
+            var g = document.getElementById("student_reg_new_case");
+            //var y = document.getElementById("ref_reg_select_two");
+            var student_re = 0;
+
+            var optionDefault1 = document.createElement("option");
+            optionDefault1.value = student_re;
+            optionDefault1.label = student_re;
+
+            g.appendChild(optionDefault1);
+
+            studentArray.forEach(student => {
+              let student_reg = student['regNo'];
+              let option = document.createElement("option");
+              option.value = student_reg;
+              option.label = student_reg;
+
+              g.appendChild(option);
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     function openForm() {
         document.getElementById("myForm").style.display = "block";
     }
@@ -477,7 +545,8 @@ span.psw {
 
     }
 
-    function populateTableCases(rowdata_orig,errorFromDB,profiles){
+    function populateTableCases(rowdata_orig,errorFromDB,profiles,tichaa,students){
+        ID_user = tichaa;
 
         var teacherID;
 
@@ -485,6 +554,12 @@ span.psw {
             populateStudentProfiles(profiles,errorFromDB)
         } catch (error) {
             //
+            console.log(error);
+        }
+
+        try {
+            populateStudentsNewCase(students);
+        } catch (error) {
             console.log(error);
         }
 
@@ -591,6 +666,10 @@ span.psw {
                 if(selectedValue){
                     g.style.display = "block";
                     h.style.display = "none";
+
+                    var t_id = document.getElementById("teacher_no");
+                    t_id.value = ID_user;
+                    t_id.setAttribute('disabled',true);
                 }else{
                     g.style.display = "none";
                     h.style.display = "block";
@@ -634,7 +713,7 @@ span.psw {
 
         try{
 
-            alert(rowdata_orig);
+            //alert(rowdata_orig);
 
             var table = document.getElementById('student_profiles');  
             
@@ -712,6 +791,9 @@ span.psw {
 
 </script>
 <link rel="stylesheet" href="css/123.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+ rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 <!--fav-icon-->
 <link rel="shortcut icon" href="images/download.png"/>
 </head>
@@ -727,7 +809,7 @@ span.psw {
                 <span class="nav-icon"></span>
             </label>
             <ul class="menu" style="border-radius: 5px; padding:5px;">
-                <li><label id="teacher_id_label"><b>No id</b></label><li>
+                <!--<li><label id="teacher_id_label"><b>No id</b></label><li>-->
                 <li><button type="button" onclick="showStudentProfiles(true)"><b>Students Profile</b></button><li>
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
                 <li><button type="button" onclick="showAddCase(true)">Report Case</button><li>
@@ -744,38 +826,75 @@ span.psw {
 
         <div class="cases">
             
-            <?php if (mysqli_num_rows($qry1) >= 1){
-                $valEcho;
-                $tichaId = $teacherID;
-                $errorId = $error;
-                //$options = array();
-                $index = 0;
-                //$ticha;
-
-                //$val_profiles = array();
-                $val_profiles = json_encode($options_profiles);
-
-                $valEcho = json_encode($options);
-
-                //$val_profiles = json_encode($options_profiles);
+            <?php 
+            
+            try {
+                //code...
+                $valStudents = array();
 
                 try {
                     //code...
-                    echo "<br></br><br></br>";
-                    
-                    if($valEcho){
-                        //$val_echo_string."populateTableCases($valEcho);";
-
-                        echo "<script type='text/javascript'> window.onload = function(){
-                            populateTableCases($valEcho,'$errorId',$val_profiles);
-                        };  </script>";
-                    }
-                } catch (Throwable $th) {
+                    $valStudents = json_encode($options_students);
+                } catch (\Throwable $th) {
                     //throw $th;
                 }
 
+                if (mysqli_num_rows($qry1) >= 1){
+                    $valEcho;
+                    $tichaId = $teacherID;
+                    $errorId = $error;
+                    //$options = array();
+                    $index = 0;
+                    //$ticha;
+    
+                    $val_profiles = array();
+                    
+                    try {
+                        //code...
+                        $val_profiles = json_encode($options_profiles);
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+
+                    
+                    
+    
+                    try {
+                        //code...
+                        $valEcho = json_encode($options);
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
                 
-             }
+                    //$val_profiles = json_encode($options_profiles);
+    
+                    try {
+                        //code...
+                        echo "<br></br><br></br>";
+                        
+                        if($valEcho){
+                            //$val_echo_string."populateTableCases($valEcho);";
+    
+                            echo "<script type='text/javascript'> window.onload = function(){
+                                populateTableCases($valEcho,'$errorId',$val_profiles,$roww,$valStudents);
+                            };  </script>";
+                        }
+                    } catch (Throwable $th) {
+                        //throw $th;
+                    }
+    
+                    
+                }else{
+                    if($valStudents)
+                    echo "<script type='text/javascript'> window.onload = function(){
+                        setIDUser($roww,$valStudents);
+                    };  </script>";
+                }
+
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            
              ?>
         </div>
 
@@ -787,21 +906,64 @@ span.psw {
             
               </div>
             
-            <div class="mb-3">
+            <div class="container">
                 <label for="teacher"><b>Teacher ID</b></label>
-                <input type ="text" placeholder="Teacher id" name="teacher" required>
+                <input id="teacher_no" type ="text" placeholder="Teacher id" name="teacher" required>
 
-                <label for="student"><b>Student Reg ID</b></label>
-                <input type ="text" placeholder="Enter student reg no." name="student" required>
+                <label for="student"><b>Student Reg No</b></label>
+                <!--<input type ="text" placeholder="Enter student reg no." name="student" required>-->
+                <select id="student_reg_new_case" class="form-select mb-3="
+                name="student"
+                arial-label="Default select example">
+                    
+                </select>
 
                 <label for="infraction"><b>Infraction</b></label>
-                <input type="text" placeholder="theft" name="infraction" required>
+                <!--<input type="text" placeholder="theft" name="infraction" required>-->
+                <select class="form-select mb-3="
+                name="infraction"
+                arial-label="Default select example">
+                    
+                     <option value="Assault and insult on techers and non-teachers">Assault and insult on techers and non-teachers</option>
+                     <option value="Assault on school officials">Assault on school officials</option>
+                     <option value="Mass protest">Mass protest</option>
+                     <option value="Cultism">Cultism</option>
+                     <option value="Vanadalism">Vanadalism</option>
+                     <option value="Examination mulpractise">Examination mulpractise</option>
+                     <option value="Fighting">Fighting</option>
+                     <option value="Drug abuse">Drug abuse</option>
+                     <option value="Speaking in pidgin English">Speaking in pidgin English</option>
+                     <option value="Theft">Theft</option>
+                </select>
+                
 
                 <label for="penalty"><b>Penalty</b></label>
-                <input type="text" placeholder="penalty" name="penalty" required>
+                <!--<input type="text" placeholder="penalty" name="penalty" required>-->
+                <select class="form-select mb-3="
+                name="penalty"
+                arial-label="Default select example">
+                    
+                     <option value="Short-term suspension(less than 10days)">Short-term suspension(less than 10days)</option>
+                     <option value="Detention">Detention</option>
+                     <option value="In-school suspension">In-school suspension</option>
+                     <option value="Long-term suspension(more than 10 days)">Long-term suspension(more than 10 days)</option>
+                     <option value="Expulsion out of school(out of school indefinately)">Expulsion out of school(out of school indefinately)</option>
+                </select>
+                
          
                 <label for="action"><b>Action</b></label>
-                <input type="action" placeholder="verbal warning" name="action" required>
+                <select class="form-select mb-3="
+                    name="action"
+                    arial-label="Default select example" required>
+                    
+                     <option value="Verbal warning">Verbal warning</option>
+                     <option value="Detention">Detention</option>
+                     <option value="Phone call to parent">Phone call to parent</option>
+                     <option value="Written note to parent">Written note to parent</option>
+                     <option value="Assignment of writting a reflective summerry of behavior">Assignment of writting a reflective summerry of behavior</option>
+                     
+                </select>
+                <!--<input type="action" placeholder="verbal warning" name="action" required>-->
     
                 <button type="submit" >Submit</button>
     
@@ -810,7 +972,7 @@ span.psw {
             <div class="container" style="background-color:#f1f1f1">
               <button type="button" onclick="showAddCase(false)" class="cancelbtn">Cancel</button>
             </div>
-  
+        </div>
         </form>
         </div>
 
@@ -869,6 +1031,19 @@ span.psw {
         </div>
 
         </div>
+         <!--img-->
+         <div class="home-img" style="width: 500px;">
+                
+                <marquee width="90%" direction="left" onmouseover="this.stop();"
+                onmouseout="this.start();">
+                    <a href="#" style="color: white;">There is no magic wand that can resolve our problems
+                    the solution rest with our work and discipline</a>
+                    </marquee>
+                    <marquee width="100%" direction="right" onmouseover="this.stop();"
+                onmouseout="this.start();">
+                    <a href="#" style="color: white;">Success is measured by your discipline and inner peace.</a>
+                    </marquee>
+            </div>
          <!--footer-------------
     <footer align="bottom">
       <div class="copywrite-area">

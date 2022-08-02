@@ -48,7 +48,7 @@ else if(empty($infraction)){
 else{
 
     
-    $query = "SELECT * FROM  users WHERE id='$teacher' ";
+    $query = "SELECT * FROM  teachers WHERE id='$teacher' ";
     $result = mysqli_query($con, $query);
 
     
@@ -57,14 +57,29 @@ else{
         exit();
     }else {
 
-        $queryParent = "SELECT * FROM  users WHERE ref_student_reg='$student' ";
+        $queryParent = "SELECT * FROM  parents WHERE student_reg_no='$student' ";
         $resultParent = mysqli_query($con, $queryParent);
 
-        if (mysqli_num_rows($resultParent) < 1) {
-            header("Location: teacher.php?error=Parent not found&$user_data");
-            exit();
-        }else{
+        $isStudentValid = false;
 
+        if (mysqli_num_rows($resultParent) < 1) {
+
+            $queryParent2 = "SELECT * FROM  parents WHERE student_reg_no2='$student' ";
+            $resultParent2 = mysqli_query($con, $queryParent2);
+
+            if(mysqli_num_rows($resultParent2) < 1){
+                header("Location: teacher.php?error=Parent not found&$user_data");
+                exit();
+            }else{
+                $resultParent = $resultParent2;
+                $isStudentValid = true;
+            }
+        }else{
+            $isStudentValid = true;
+        }
+
+
+        if ($isStudentValid) {
             try {
                 $parentDetail = mysqli_fetch_assoc($resultParent);
                 $parent = $parentDetail['id'];
@@ -84,8 +99,9 @@ else{
                 header("Location: teacher.php?error=unknown error occurred&$user_data");
                 exit();
             }
-            
-
+        }else{
+            header("Location: teacher.php?error=Parent not found&$user_data");
+            exit();
         }
 
        

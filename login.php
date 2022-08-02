@@ -22,6 +22,8 @@ input[type=text], input[type=password] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  
+
 }
 
 /* Set a style for all buttons */
@@ -33,6 +35,7 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
+  
 }
 
 button:hover {
@@ -51,6 +54,7 @@ button:hover {
   margin: 24px 0 12px 0;
   position: relative;
   justify-content: center;
+  
 }
 /* The Close Button (x) */
 .close {
@@ -76,6 +80,7 @@ img.avatar {
 .container {
   padding: 16px;
   justify-content: center;
+  background-Color:#666699;
 }
 span.psw {
   float: right;
@@ -92,12 +97,15 @@ span.psw {
   height: 100%; 
   justify-content: center;
   padding-top: 0px;
+  font-size: 17px;
+  
+
 }
 
 /* Modal Content/Box */
 .modal-content {
     width: 400px;
-  background-color: #fefefe;
+    background-Color:#ff6600;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
   width: 10%; /* Could be more or less, depending on screen size */
@@ -137,6 +145,7 @@ span.psw {
               <div class="container">
                 <label for="uname"><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>
+                
           
                 <label for="psw"><b>Password</b></label>
                 <input type="password" placeholder="At least 8 characters" name="psw" required>

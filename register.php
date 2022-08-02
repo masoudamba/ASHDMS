@@ -1,3 +1,50 @@
+<?php
+
+include("config.php");
+include("function.php");
+
+$error = "No Error";
+
+ $sql_cases = "SELECT * FROM students";
+ //$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
+
+ $qry1 = mysqli_query($con, $sql_cases);
+ $qryProfile = mysqli_query($con, $sql_cases);
+ $index_cases = 0;
+ $index = 0;
+ $index_cases_new = 0;
+ $options_profiles = array();
+ $val_profiles;
+ $options = array();
+
+
+$validExecute = false;
+
+//get students details
+try {
+    //code...
+    if((mysqli_num_rows($qry1)) > 0){
+      $validExecute = true;
+
+      while($ticha = mysqli_fetch_assoc($qry1)){
+        $options[$index] = $ticha;
+        $index = $index+1;
+      }
+    }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+
+ if(isset($_GET['error'])){
+    $error = $_GET['error'];
+ }
+ 
+ if(isset($_GET['success'])){
+    $error = $_GET['success'];
+ }
+
+?>
+
 
 <!doctype html>
 <html>
@@ -25,13 +72,62 @@
 
          function schedule(selectedValue){
             var g = document.getElementById("ref_student_reg");
+            var y = document.getElementById("ref_student_reg2");
             if("Parent"===selectedValue){
                 g.style.display = "block";
+                y.style.display = "block";
             }else{
                 g.style.display = "none";
+                y.style.display = "none";
             }
         
         }
+
+        function addStudentsToOptions(studentData,errorCode){
+
+          try {
+
+
+            //var cell3 = row.insertCell(7);  
+          //var element3 = document.createElement("select");
+            var element3 = document.createElement("select");
+            var g = document.getElementById("ref_reg_select_one");
+            var y = document.getElementById("ref_reg_select_two");
+            var student_re = 0;
+
+            var optionDefault1 = document.createElement("option");
+            var optionDefault2 = document.createElement("option");
+            optionDefault1.value = student_re;
+            optionDefault1.label = student_re;
+
+            optionDefault2.value = student_re;
+            optionDefault2.label = student_re;
+
+            g.appendChild(optionDefault1);
+            y.appendChild(optionDefault2);
+
+
+
+            studentData.forEach(student => {
+              var student_reg = student['regNo'];
+              var option = document.createElement("option");
+              var option2 = document.createElement("option");
+              option.value = student_reg;
+              option.label = student_reg;
+
+              option2.value = student_reg;
+              option2.label = student_reg;
+
+              g.appendChild(option);
+              y.appendChild(option2);
+            });
+          } catch (error) {
+            console.log(error);
+          }
+
+        }
+
+
 
 </script>  
 <link rel="stylesheet" href="css/123.css"/>
@@ -79,6 +175,7 @@ button:hover {
   text-align: center;
   margin: 24px 0 12px 0;
   position: relative;
+  justify-content: center;
 }
 /* The Close Button (x) */
 .close {
@@ -103,6 +200,7 @@ img.avatar {
 
 .container {
   padding: 16px;
+  background-color:#006666;
 }
 span.psw {
   float: center;
@@ -112,13 +210,13 @@ span.psw {
 .modal {
   display: flex; /* Hidden by default */
   position: absolute; 
-  z-index: 0; /* Sit on top */
+  z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; 
   height: 100%; 
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 0px;
 }
 
 /* Modal Content/Box */
@@ -144,9 +242,50 @@ span.psw {
             </label>
     </section>
 
+    <div class="cases">
+            
+        <?php 
+            //mysqli_num_rows($qry1) >= 1
+            $vExecute = $validExecute;
+            if ($vExecute){
+                $valEcho;
+                //$tichaId = $teacherID;
+                $errorId = $error;
+                //$options = array();
+                $index = 0;
+                //$ticha;
+
+                //$val_profiles = array();
+                //$val_profiles = json_encode($options_profiles);
+
+                $valEcho = json_encode($options);
+
+                //$val_profiles = json_encode($options_profiles);
+
+                try {
+                    //code...
+                    echo "<br></br><br></br>";
+                    
+                    if($valEcho){
+                        //$val_echo_string."populateTableCases($valEcho);";
+
+                        echo "<script type='text/javascript'> window.onload = function(){
+                          addStudentsToOptions($valEcho,'$errorId');
+                        };  </script>";
+                    }
+                } catch (Throwable $th) {
+                    //throw $th;
+                }
+
+                
+             }
+        ?>
+    </div>
+
 	
     <!-- register modal start -->
     <div class = "modal">
+      
         <form  action="register_check.php" method="post"style="
             width: 400px;
         ">
@@ -155,7 +294,7 @@ span.psw {
                 <p style="font-size: 30px;">Fill up the form based on role: </p>
             
               </div>
-    <div class="mb-3">
+    <div class="container">
     <label for="firstname"><b>First Name</b></label>
     <input type ="text" placeholder="firstname" name="firstname" required>
 
@@ -172,13 +311,30 @@ span.psw {
                      <option value="Parent">Parent</option>
     </select>
     </div>
-    <div style="display:none;" id="ref_student_reg" class="studentreg">
+    
+    <div style="display:none;" id="ref_student_reg" class="mb-1">
         <label for="studentre"><b>Student Reg. No.</b></label>
-        <input type="text" placeholder="student reg no" name="studentre">
+            <select id="ref_reg_select_one" class="form-select mb-3="
+                name="studentre"
+                arial-label="Default select example">
+            </select>
+
+        <!--<label for="studentre"><b>Student Reg. No.</b></label>
+        <input type="text" placeholder="student reg no" name="studentreg">-->
+    </div>
+    
+    <div style="display:none;" id="ref_student_reg2" class="mb-1">
+        <label for="studentre2"><b>Student Reg. No. 2</b></label>
+          <select id="ref_reg_select_two" class="form-select mb-3="
+                name="studentre2"
+                arial-label="Default select example">
+          </select>
+        <!--<label for="studentre2"><b>Student Reg. No2.</b></label>
+        <input type="text" placeholder="student reg no2" name="studentre2">-->
     </div>
          
     <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="name@gmail.com" name="email" required>
+    <input type="email" placeholder="name@gmail.com" name="email">
 
     <label for="phone"><b>Phone Number</b></label>
     <input type="phone" placeholder="Enter phone" name="phone" required>

@@ -6,7 +6,6 @@ session_start();
     
 if (isset($_POST['uname']) && isset($_POST['psw'])
 && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['role']) 
-&& isset($_POST['email'])
 && isset($_POST['phone'])
 && isset($_POST['pswC'])) {
 
@@ -25,8 +24,10 @@ $pswC = validate($_POST['pswC']);
 $firstname = validate($_POST['firstname']);
 $lastname = validate($_POST['lastname']);
 $role = validate($_POST['role']);
+$email = "No email";
 $email = validate($_POST['email']);
-$studentre = "No Reg no";
+$studentre = 0;
+$studentre2 = 0;
 $phone = validate($_POST['phone']);
 
 
@@ -44,10 +45,6 @@ else if(empty($pswC)){
 }
 else if(empty($firstname)){
     header("Location: register.php?error=firstname is required&$user_data");
-    exit();
-}
-else if(empty($email)){
-    header("Location: register.php?error=email is required&$user_data");
     exit();
 }
 else if(empty($phone)){
@@ -72,11 +69,14 @@ else{
 
     if('Parent'===$role){
         $studentre = validate($_POST['studentre']);
+        $studentre2 = validate($_POST['studentre2']);
         
     
         if(empty($studentre)){
             header("Location: register.php?error=Student Reg No. is required&$user_data");
             exit();
+        }else if(empty($studentre2)){
+            $studentre2 = 0;
         }
         //header("Location: register.php?error=Re Password is required&$user_data");
         //exit();
@@ -96,9 +96,16 @@ else{
         header("Location: register.php?error=The username is taken try another&$user_data");
         exit();
     }else {
-       $query2 = "INSERT INTO users(first_name, last_name ,role,
-       email,phone_number, user_name, password, c_password, ref_student_reg) 
-       VALUES('$firstname', '$lastname', '$role', '$email','$phone','$uname', '$psw', '$pswC','$studentre')";
+
+        $query2 = "INSERT INTO teachers(first_name, last_name ,role,
+            email,phone_number, username, password, c_password) 
+                VALUES('$firstname', '$lastname', '$role', '$email','$phone','$uname', '$psw', '$pswC')";
+        if('Parent'===$role){
+            $query2 = "INSERT INTO parents(first_name, last_name ,role,
+            email,phone_number, username,student_reg_no,student_reg_no2,password, c_password) 
+                VALUES('$firstname', '$lastname', '$role', '$email','$phone','$uname','$studentre','$studentre2','$psw', '$pswC')";
+        }
+       
        $result2 = mysqli_query($con, $query2);
        if ($result2) {
             header("Location: login.php?success=Your account has been created successfully");

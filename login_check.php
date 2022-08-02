@@ -28,7 +28,12 @@ session_start();
         }else{
             $psw = md5($psw);
              
-            $query = "SELECT * FROM users WHERE user_name='$uname' AND password='$psw'";
+            $query = "SELECT * FROM teachers WHERE username='$uname' AND password='$psw'";
+
+            if('Parent'===$role){
+                $query = "SELECT * FROM parents WHERE username='$uname' AND password='$psw'";
+            }
+
             $result = mysqli_query($con, $query);
 
             
@@ -52,7 +57,7 @@ session_start();
                         if($row['role'] === 'Teacher'){
                             header("Location: teacher.php?details='$idd'");
                         }else if($row['role']==='Admin'){
-                            header("Location: admin.php?details=$row_encoded");
+                            header("Location: admin.php?details='$idd'");
                         }else{
                             header("Location: parent.php?details='$idd'");
                         }

@@ -36,20 +36,29 @@
   to {transform: scale(1)}
 }
 .dropdown {
-  
+  position: relative;
   display: inline-block;
-  cursor: pointer;
-  display:none;
-  transition-duration: 500ms
-  text-transform: uppercase;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 768px
-  max-width: 991px
-  padding: 0 20px;
-  z-index: 1;
 }
 
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 5px 8px;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content p:hover {background-color: gray}
+.dropdown-content li{
+  color: black;
+  padding: 12px 16px;
+
+  
+}
 
 </style>
 </head>
@@ -67,20 +76,55 @@
                 <span class="nav-icon"></span>
             </label>
             <ul class="menu" style="border-radius: 5px;">
-                <li><a href="#">Action</a>
                 <ul class="dropdown">
-                  <li><a href="#">Verbal Warning</a></li>
-                  <li><a href="#">Detention</a></li>
-                  <li><a href="#">Phone call to parent</a></li>
-                  <li><a href="#">Written note to parent</a></li>
-                  <li><a href="#">Assignment of writing a reflective summary of behavior</a></li>
+                <li><a href="#">Action</a>
+                <div class="dropdown-content">
+                  <div class = "list">
+                  <ol>
+                  <li>Verbal Warning</li>
+                  <li> Detention</li>
+                  <li>Phone call to parent</li>
+                  <li>Written note to parent</li>
+                  <li>Assignment of writing a reflective summary of behavior</li>
+                </ol>
+                </div>
+                </div>
                   </ul>
               </li>
+              <ul class="dropdown">
                 <li><a href="#">Infraction</a>
-              
+                <div class="dropdown-content">
+                  <div class = "list">
+                  <ol>
+                  <li>Assault and insult on teachers and non- teachers</li>
+                  <li>Assault on school officials</li>
+                  <li>Mass protest</li>
+                  <li>Cultism</li>
+                  <li>Vandalism</li>
+                  <li>Fighting</li>
+                  <li>Examination mulpractise</li>
+                  <li>Bullying</li>
+                  <li>Drug abuse and alcholism</li>
+                  <li>Speaking in pidgin English</li>
+              </ol>
+              </div>
+                </div>
+              </ul>
               </li>
+                <ul class="dropdown">
                 <li><a href="#">Penalty</a></li>
-                <li><a href="#">Served Cases</a></li>
+                <div class="dropdown-content">
+                  <div class = "list">
+                    <ol>
+                  <li>Short-term suspension(less than 10 days)</li>
+                  <li>Detention</li>
+                  <li>In-school suspension</li>
+                  <li>Long-term suspension(more than 10 days)</li>
+                  <li>Expulsion(out if school indefinately)</li>
+                </ol>
+                 </div>
+                </div>
+                </ul>
                 <li><a href="login.php">login</a></li>
                 <li><a href="register.php">Signup</a></li>
                 

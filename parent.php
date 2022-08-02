@@ -659,6 +659,8 @@ try {
 <link rel="stylesheet" href="css/123.css"/>
 <!--fav-icon-->
 <link rel="shortcut icon" href="images/download.png"/>
+
+
 </head>
 <body>
 <section class="main" style="background-image: url(images/slider2.jpg);">
@@ -798,6 +800,19 @@ try {
                     
                 </TABLE>
         </div>
+         <!--img-->
+         <div class="home-img" style="width: 500px;">
+                
+                <marquee width="90%" direction="left" onmouseover="this.stop();"
+                onmouseout="this.start();">
+                    <a href="#" style="color: white;">There is no magic wand that can resolve our problems
+                    the solution rest with our work and discipline</a>
+                    </marquee>
+                    <marquee width="100%" direction="right" onmouseover="this.stop();"
+                onmouseout="this.start();">
+                    <a href="#" style="color: white;">Success is measured by your discipline and inner peace.</a>
+                    </marquee>
+            </div>
 
          <!--footer------------->
     <footer>
