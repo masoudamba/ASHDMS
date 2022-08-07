@@ -22,7 +22,7 @@ $student_lName = validate($_POST['student_LName']);
 $student_form = validate($_POST['student_form']);
 
 $teacher = $_POST['teacher'];
-//$user_data = 'details='. $teacher. '&parentid='. $parent;
+
 $user_data = 'details='. $teacher;
 if (empty($teacher)) {
     header("Location: admin.php?error=Admin id is required&$user_data");
@@ -68,7 +68,7 @@ else{
                 exit();
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            
             header("Location: admin.php?error=unknown error occurred&$user_data");
             exit();
         }

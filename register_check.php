@@ -67,9 +67,13 @@ else if($psw !== $pswC){
 }
 else{
 
+    $table_focus = "teachers";
+
     if('Parent'===$role){
         $studentre = validate($_POST['studentre']);
         $studentre2 = validate($_POST['studentre2']);
+
+        $table_focus = "parents";
         
     
         if(empty($studentre)){
@@ -78,19 +82,16 @@ else{
         }else if(empty($studentre2)){
             $studentre2 = 0;
         }
-        //header("Location: register.php?error=Re Password is required&$user_data");
-        //exit();
+       
     }
 
     // hashing the password
     $psw = md5($psw);
     $pswC = md5($pswC);
-    $query = "SELECT * FROM  users WHERE user_name='$uname' ";
+    $query = "SELECT * FROM $table_focus WHERE username='$uname' ";
     $result = mysqli_query($con, $query);
 
-    //if('Parent'!==$role){
-    //    $studentre='No registration No';
-    //}
+   
 
     if (mysqli_num_rows($result) > 0) {
         header("Location: register.php?error=The username is taken try another&$user_data");

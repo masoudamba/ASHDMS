@@ -24,7 +24,7 @@ $action = validate($_POST['action']);
 $infraction = validate($_POST['infraction']);
 
 
-//$user_data = 'details='. $teacher. '&parentid='. $parent;
+
 $user_data = 'details='. $teacher;
 if (empty($teacher)) {
     header("Location: teacher.php?error=Teacher id is required&$user_data");
@@ -84,11 +84,11 @@ else{
                 $parentDetail = mysqli_fetch_assoc($resultParent);
                 $parent = $parentDetail['id'];
 
-                $query2 = "INSERT INTO cases(parent_id, teacher_id ,status,infraction,penalty,action) 
-                VALUES('$parent', '$teacher', 'Pending','$infraction', '$penalty','$action')";
+                $query2 = "INSERT INTO cases(parent_id, teacher_id ,status,infraction,penalty,action,verdict,link,date) 
+                VALUES('$parent', '$teacher', 'Pending','$infraction', '$penalty','$action','Pending','Pending','Pending')";
                 $result2 = mysqli_query($con, $query2);
                 if ($result2) {
-                    header("Location: teacher.php?success=Your case has been created successfully&$user_data");
+                    header("Location: teacher.php?error=Your case has been created successfully&$user_data");
                     exit();
                 }else {
                     header("Location: teacher.php?error=unknown error occurred&$user_data");

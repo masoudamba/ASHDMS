@@ -101,6 +101,8 @@
                   <li>Mass protest</li>
                   <li>Cultism</li>
                   <li>Vandalism</li>
+                  <li>Sleeping in class</li>
+                  <li>Theft</li>
                   <li>Fighting</li>
                   <li>Examination mulpractise</li>
                   <li>Bullying</li>
@@ -144,7 +146,7 @@
                   for academic achievement since it enables you to set objectives and 
                   achieve them, building your confidence and setting the groundwork for future success.</p>
             <!--login-btn-->
-            <a href="#" class="main-login" style="border-radius: 5px;">Our Rules</a>
+            <a href="rules.php" class="main-login" style="border-radius: 5px;">Our Rules</a>
             </div>
             <!--img-->
             <div class="home-img" style="width: 500px;">
@@ -211,7 +213,22 @@
                 <!--btn--------->
                 <a href="login.php">Your Duty</a>
             </div>
-           
+            <div class="box">
+                <img src="images/bom.jpg">
+                <h2>Role as BOM</h2>
+                <p> Promote the best interests of the school and ensure that there is development within the school.  </p>
+                <!--btn--------->
+                <a href="login.php">Your Role</a>
+            </div>
+            <div class="box">
+                <img src="images/committee.png">
+                <h2>Are you part of the Committee?</h2>
+                <p> Ensure protection of the school interest by establishing and
+                   maintaining a framework for dealing with matters referred to 
+                  you for discipline by the Inquiries, Complaints and Reports by the admin. </p>
+                <!--btn--------->
+                <a href="login.php">Handle here</a>
+            </div>
             <!--box-1-------->
             
         </div>

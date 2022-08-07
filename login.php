@@ -157,6 +157,8 @@ span.psw {
                      <option value="Admin">Admin</option>
                      <option value="Teacher">Teacher</option>
                      <option value="Parent">Parent</option>
+                     <option value="BOM">BOM</option>
+                     <option value="Committee">Committee</option>
               </select>
                   
                   

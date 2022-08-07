@@ -30,6 +30,8 @@ if(isset($_POST['Pay'])){
     curl_setopt($curl,CURLOPT_USERPWD,$consumerKey.':'.$consumerSecret);
     $results = curl_exec($curl);
     $status = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+    echo ' Results = '.$results;
+
     $results = json_decode($results);
     $access_token = $results->access_token;
     $stkheader = ['Content-Type:application/json','Authorization:Bearer '.$access_token];

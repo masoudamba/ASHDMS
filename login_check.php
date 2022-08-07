@@ -3,7 +3,7 @@
 session_start();
 
 	include("config.php");
-	//include("function.php");
+	
 
 
     if (isset($_POST['uname']) && isset($_POST['psw']) && isset($_POST['role'])) {
@@ -32,6 +32,10 @@ session_start();
 
             if('Parent'===$role){
                 $query = "SELECT * FROM parents WHERE username='$uname' AND password='$psw'";
+            }else if('Committee'===$role){
+                $query = "SELECT * FROM committee WHERE username='$uname' AND password='$psw'";
+            }else if('BOM'===$role){
+                $query = "SELECT * FROM bom WHERE username='$uname' AND password='$psw'";
             }
 
             $result = mysqli_query($con, $query);
@@ -40,17 +44,17 @@ session_start();
             if (mysqli_num_rows($result) === 1) {
                 $row = mysqli_fetch_assoc($result);
                 if ($row['password'] === $psw) {
-                    //$row['password'] === $psw && $row['role'] === $role
+                   
                     if($row['role'] != $role){
                         if($role === 'Admin'){
                             header("Location: login.php?error=You are not an Admin!");
                         }
-                        //echo 'Role not matching!';
+                      
                     }else{
                         $_SESSION['name'] = $row['name'];
                         $_SESSION['id'] = $row['id'];
                         $_SESSION['role'] = $row['role'];
-                        $_SESSION['uname'] = $row['uname'];
+                        $_SESSION['uname'] = $row['username'];
 
                         $idd = $row['id'];
                         $row_encoded = json_encode($row);
@@ -58,6 +62,10 @@ session_start();
                             header("Location: teacher.php?details='$idd'");
                         }else if($row['role']==='Admin'){
                             header("Location: admin.php?details='$idd'");
+                        }else if($row['role']==='BOM'){
+                            header("Location: BOM.php?details='$idd'");
+                        }else if($row['role']==='Committee'){
+                            header("Location: committee.php?details='$idd'");
                         }else{
                             header("Location: parent.php?details='$idd'");
                         }

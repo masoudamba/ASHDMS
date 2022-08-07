@@ -9,7 +9,7 @@ $error = "No Error";
 $teacherID = $roww;
 
  $sql_cases = "SELECT * FROM cases WHERE teacher_id = $teacherID";
- //$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
+
 
  $sql_students = "SELECT * FROM students";
 
@@ -23,13 +23,13 @@ $teacherID = $roww;
     $qryStudents = mysqli_query($con, $sql_students);   
    
    while($tichaStudent = mysqli_fetch_assoc($qryStudents)){
-       //$valEcho = json_encode($ticha);
+      
        $options_students[$indexStudent] = $tichaStudent;
        $indexStudent = $indexStudent+1;
        
    }
  } catch (\Throwable $th) {
-    //throw $th;
+    
  }
 
  $qry1;
@@ -45,17 +45,14 @@ $teacherID = $roww;
     $qry1 = mysqli_query($con, $sql_cases);
     $qryProfile = mysqli_query($con, $sql_cases);
     
-   
-   
-   
    while($ticha = mysqli_fetch_assoc($qry1)){
-       //$valEcho = json_encode($ticha);
+      
        $options[$index] = $ticha;
        $index = $index+1;
        
    }
  } catch (\Throwable $th) {
-    //throw $th;
+   
  }
 
 
@@ -65,7 +62,7 @@ $teacherID = $roww;
     if((mysqli_num_rows($qryProfile)) > 0){
 
         while($ticha_profile = mysqli_fetch_assoc($qryProfile)){
-            //$valEcho = json_encode($ticha);
+            
     
             $parent_name = " No name";
             $student_reg = "No reg";
@@ -83,11 +80,11 @@ $teacherID = $roww;
                 $status = $ticha_profile['status'];
     
             } catch (\Throwable $th) {
-                //throw $th;
+              
             }
     
             $p_id = $ticha_profile['parent_id'];
-            $sql_parent_id = "SELECT * FROM users WHERE id = $p_id";
+            $sql_parent_id = "SELECT * FROM parents WHERE id = $p_id";
             $qryParentId = mysqli_query($con, $sql_parent_id);
     
             try {
@@ -95,7 +92,7 @@ $teacherID = $roww;
                 while ($p_assoc = mysqli_fetch_assoc($qryParentId)) {
                     # code...
                     if($p_id===$p_assoc['id']){
-                        $student_reg = $p_assoc['ref_student_reg'];
+                        $student_reg = $p_assoc['student_reg_no'];
                         $parent_name = $p_assoc['first_name']." ".$p_assoc['last_name'];
                         
                     }
@@ -104,7 +101,7 @@ $teacherID = $roww;
                 
                 
             } catch (\Throwable $th) {
-                //throw $th;
+               
     
             }
     
@@ -123,7 +120,7 @@ $teacherID = $roww;
                 
     
             } catch (\Throwable $th) {
-                //throw $th;
+                
             }
     
     
@@ -145,10 +142,10 @@ $teacherID = $roww;
             
         }
 
-        //$val_profiles = json_encode($options_profiles);
+       
      }
  } catch (\Throwable $th) {
-    //throw $th;
+    
  }
 
 
@@ -156,7 +153,6 @@ $teacherID = $roww;
  
 
 
- //$qry1 = $con->query($sql_cases);
 
  if(isset($_GET['error'])){
     $error = $_GET['error'];
@@ -338,7 +334,7 @@ img.avatar {
     var ID_user = 0;
 
     function setIDUser(id,students){
-        //alert(id);
+       
         try {
             ID_user = id;
         } catch (error) {
@@ -353,9 +349,9 @@ img.avatar {
 
         try {
             
-            //var element3 = document.createElement("select");
+           
             var g = document.getElementById("student_reg_new_case");
-            //var y = document.getElementById("ref_reg_select_two");
+           
             var student_re = 0;
 
             var optionDefault1 = document.createElement("option");
@@ -398,7 +394,7 @@ img.avatar {
             var x = table.rows[rowCounttt].cells[0].value;
             rowCount = x; 
         }catch(e){
-            //alert(e);
+            
         }
           
         //Column 1    
@@ -457,18 +453,22 @@ img.avatar {
             var option1 = document.createElement("option");
             var option2 = document.createElement("option");
             var option3 = document.createElement("option");
+            var option4 = document.createElement("option");
             option1.value = "Pending";
             option2.value = "Completed";
             option3.value = "Active";
+            option4.value = "Escalated";
 
             option1.label = "Pending";
             option2.label = "Completed";
             option3.label = "Active";
+            option4.label = "Escalated";
 
             element3.class = "form-select";
             element3.appendChild(option1); 
             element3.appendChild(option2);
             element3.appendChild(option3);
+            element3.appendChild(option4);
             element3.setAttribute('disabled',true);
             cell3.appendChild(element3);
 
@@ -502,7 +502,7 @@ img.avatar {
             element1.type = "button";  
             var btnName = "button" + (rowCount + 1);  
             element1.name = btnName;  
-            element1.setAttribute('value', 'Edit'); // or element1.value = "button";  
+            element1.setAttribute('value', 'Edit');  
             element1.onclick = function () { editRow(btnName); }  
             element1.setAttribute('disabled',false);
             cell1.appendChild(element1);
@@ -511,7 +511,7 @@ img.avatar {
             element2.type = "button";  
             var btnName = "button" + (rowCount + 1);  
             element2.name = btnName;  
-            element2.setAttribute('value', 'Confirm'); // or element1.value = "button";  
+            element2.setAttribute('value', 'Confirm');  
             element2.onclick = function () { confirmRow(btnName); }  
             element2.setAttribute('disabled',true);
             cell1.appendChild(element2);
@@ -540,7 +540,7 @@ img.avatar {
             }
 
         } catch (error) {
-            //alert(error);
+            
         }
 
     }
@@ -565,7 +565,7 @@ img.avatar {
 
         try{
 
-            //alert(rowdata);
+            
 
             var table = document.getElementById('dataTable');  
             
@@ -601,7 +601,7 @@ img.avatar {
                         row.cells.item(index).style.backgroundColor = strColor;
 
                     }
-                    //row.cells.item(index).firstChild.value=rowdata['status'];
+                 
                     row.cells.item(index).firstChild.value=stateus;
                 }
  
@@ -609,7 +609,7 @@ img.avatar {
 
             try {
                     var ticha_ID_Element = document.getElementById('teacher_id_label');
-                    //ticha_ID_Element.innerHTML=" ID : "+rowdata['teacher_id'];
+                  
                     ticha_ID_Element.innerHTML=" ID : "+ttt_id;
             } catch (error) {
                 //
@@ -629,7 +629,7 @@ img.avatar {
             }
 
         } catch (error) {
-            //alert(error);
+           
         }
     }
 
@@ -669,7 +669,7 @@ img.avatar {
 
                     var t_id = document.getElementById("teacher_no");
                     t_id.value = ID_user;
-                    t_id.setAttribute('disabled',true);
+                   
                 }else{
                     g.style.display = "none";
                     h.style.display = "block";
@@ -713,7 +713,7 @@ img.avatar {
 
         try{
 
-            //alert(rowdata_orig);
+            
 
             var table = document.getElementById('student_profiles');  
             
@@ -725,7 +725,7 @@ img.avatar {
                 addRow('student_profiles');
 
                 var row = table.rows[rowCount];
-                //ttt_id = rowdata['teacher_id'];
+                
                 stateus = "null";
                 try {
                     for (let index = 1; index < 8; index++) {
@@ -753,7 +753,7 @@ img.avatar {
 
                             row.cells.item(index).style.backgroundColor = strColor;
                         }   
-                        //row.cells.item(index).firstChild.value=rowdata['status'];
+                       
                         row.cells.item(index).firstChild.value=stateus;
                     }
                 } catch (error) {
@@ -764,8 +764,7 @@ img.avatar {
 
             try {
                     var ticha_ID_Element = document.getElementById('teacher_id_label');
-                    //ticha_ID_Element.innerHTML=" ID : "+rowdata['teacher_id'];
-                    //ticha_ID_Element.innerHTML=" ID : "+ttt_id;
+                   
             } catch (error) {
                 //
             }
@@ -785,7 +784,7 @@ img.avatar {
             }
 
         } catch (error) {
-            //alert(error);
+           
         }
     }
 
@@ -1032,7 +1031,7 @@ img.avatar {
 
         </div>
          <!--img-->
-         <div class="home-img" style="width: 500px;">
+         <div class="home-img" style="width: 500px; display : none;">
                 
                 <marquee width="90%" direction="left" onmouseover="this.stop();"
                 onmouseout="this.start();">

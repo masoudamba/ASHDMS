@@ -6,7 +6,7 @@ include("function.php");
 $error = "No Error";
 
  $sql_cases = "SELECT * FROM students";
- //$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
+
 
  $qry1 = mysqli_query($con, $sql_cases);
  $qryProfile = mysqli_query($con, $sql_cases);
@@ -32,7 +32,7 @@ try {
       }
     }
  } catch (\Throwable $th) {
-    //throw $th;
+   
  }
 
  if(isset($_GET['error'])){
@@ -88,8 +88,7 @@ try {
           try {
 
 
-            //var cell3 = row.insertCell(7);  
-          //var element3 = document.createElement("select");
+           
             var element3 = document.createElement("select");
             var g = document.getElementById("ref_reg_select_one");
             var y = document.getElementById("ref_reg_select_two");
@@ -319,8 +318,6 @@ span.psw {
                 arial-label="Default select example">
             </select>
 
-        <!--<label for="studentre"><b>Student Reg. No.</b></label>
-        <input type="text" placeholder="student reg no" name="studentreg">-->
     </div>
     
     <div style="display:none;" id="ref_student_reg2" class="mb-1">
@@ -329,8 +326,7 @@ span.psw {
                 name="studentre2"
                 arial-label="Default select example">
           </select>
-        <!--<label for="studentre2"><b>Student Reg. No2.</b></label>
-        <input type="text" placeholder="student reg no2" name="studentre2">-->
+        
     </div>
          
     <label for="email"><b>Email</b></label>
