@@ -1022,7 +1022,7 @@ img.avatar {
         </div>
 
         <div id="form_new_payment" style="display:none;" class = "modal">
-        <form  action="payment.php" method="post"style="width: 400px;">
+        <form  action="pay.php" method="post"style="width: 400px;">
               <div class="imgcontainer">
                 
                 <p style="font-size: 30px;">Make Payment Here: </p>
@@ -1036,12 +1036,12 @@ img.avatar {
 
                 <label for="phone"><b>Phone Number</b></label>
                 <input type="number" placeholder="254759053976" name="phone" required>
-
+            <!--
                 <label for="Pay"><b>Pay</b></label>
                 <input type="text" placeholder="pay_amount" name="Pay">
-    
+            -->
                 <button type="submit" >Submit</button>
-    
+           
             </div>
           
             <div class="container" style="background-color:#f1f1f1">
