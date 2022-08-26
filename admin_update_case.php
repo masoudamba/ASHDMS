@@ -84,17 +84,12 @@ else{
     $query3 = "SELECT * FROM cases WHERE id='$case_id' ";
     $result3 = mysqli_query($con, $query3);
 
-    //if('Parent'!==$role){
-    //    $studentre='No registration No';
-    //}
+  
 
     if (mysqli_num_rows($result) > 0) {
         
         if(mysqli_num_rows($result3) > 0){
 
-            //UPDATE Customers
-            //SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-            //WHERE CustomerID = 1;
 
             $query2 = "UPDATE cases 
                 SET parent_id = '$parent', teacher_id = '$teacher', status='$status',

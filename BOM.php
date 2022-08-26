@@ -942,6 +942,13 @@ button:hover {
 
                             if('Pending'===stateus){
                                 row.cells.item(index).firstChild.firstChild.setAttribute('disabled',true);
+                            }else if('Completed'===stateus){
+                                try {
+                                    row.cells.item(index).firstChild.firstChild.setAttribute('disabled',true);
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                                
                             }else{
                                 row.cells.item(index).firstChild.action = stateus;
                             }

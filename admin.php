@@ -427,6 +427,31 @@ display:none;
 </style>
 
 <title>ASH Discipline Monitoring System</title>
+<!-- jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<!--<script src="js/jsPDF/dist/jspdf.es.js" type="text/javascript">
+
+function downloadSimplePdf() {
+        
+        try {
+            window.jsPDF = window.jspdf.jsPDF;
+            var doc = new jsPDF();
+
+            doc.text(20, 20, 'Hello world!');
+            doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
+
+            // Add new page
+            doc.addPage();
+            doc.text(20, 20, 'Visit CodexWorld.com');
+
+            // Save the PDF
+            doc.save('document.pdf');
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+}
+</script>-->
 <script>
     var ID_user = 0;
     var All_Parents;
@@ -1310,6 +1335,111 @@ display:none;
 
     }
 
+    function download(url) {
+
+        try {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = url.split('/').pop();
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+        
+    }
+
+    function Convert_HTML_To_PDF() {
+        var elementHTML = document.getElementById('contentToPrint');
+        html2canvas(elementHTML, {
+                    useCORS: true,
+                    onrendered: function(canvas) {
+                        var pdf = new jsPDF('p', 'pt', 'letter');
+
+                        var pageHeight = 980;
+                        var pageWidth = 900;
+                        for (var i = 0; i <= elementHTML.clientHeight / pageHeight; i++) {
+                            var srcImg = canvas;
+                            var sX = 0;
+                            var sY = pageHeight * i; // start 1 pageHeight down for every new page
+                            var sWidth = pageWidth;
+                            var sHeight = pageHeight;
+                            var dX = 0;
+                            var dY = 0;
+                            var dWidth = pageWidth;
+                            var dHeight = pageHeight;
+
+                            window.onePageCanvas = document.createElement("canvas");
+                            onePageCanvas.setAttribute('width', pageWidth);
+                            onePageCanvas.setAttribute('height', pageHeight);
+                            ctx.drawImage(srcImg, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
+                            var ctx = onePageCanvas.getContext('2d');
+
+                            var width = onePageCanvas.width;
+                            var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+                            
+                            var height = onePageCanvas.clientHeight;
+                            pdf.addPage(612, 864); // 8.5" x 12" in pts (inches*72)
+                            if (i > 0) // if we're on anything other than the first page, add another page
+
+                            pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width * .62), (height * .62)); // add content to the page
+                            pdf.setPage(i + 1); // now we declare that we're working on that page
+                            
+                        }
+	                // Save the PDF
+                        pdf.save('document.pdf');
+                    }
+        });
+    }
+
+    function downloadSimplePdf() {
+        
+        try {
+            var doc = new jsPDF();
+
+            doc.text(20, 20, 'Hello world!');
+            doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
+
+            // Add new page
+            doc.addPage();
+            doc.text(20, 20, 'Visit CodexWorld.com');
+
+            // Save the PDF
+            doc.save('document.pdf');
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+    }
+
+
+    function generatePDF() {
+        var doc = new jsPDF();  //create jsPDF object
+        doc.fromHTML(document.getElementById("popup"), // page element which you want to print as PDF
+            15,
+            15, 
+            {
+                'width': 370  //set width
+            },
+            function(a) 
+            {
+                doc.save("HTML2PDF.pdf"); // save file name as HTML2PDF.pdf
+        });
+    }
+
+    function downloadPdf(){
+
+        try {
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
 </script>
 <link rel="stylesheet" href="css/123.css"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -1322,16 +1452,26 @@ display:none;
 <section class="main" style="background-image: url(images/slider3.jpg);">
         <div id="popup">
         <span class="close">&times;</span>
-         <div class="popup-form">
-            <h3>Case</h3><h3 id="case-id">ID</h3>
+         <div id="popupForm" class="popup-form">
+            <h3>Case</h3>    <h3 id="case-id">ID</h3>
+
             <p>Infraction</p><p id="infraction">Theft</p>
+
             <p>Student Name</p><p id="student-name">SNAME</p>
+
             <p>Student RegNo</p><p id="student-no">234534</p>
+
             <p>Form</p><p id="student-form">4</p>
-            <p>Teacher Name</p><p id="teacher-name">TNAME</p>
+
+            <p>Teacher Name</p>
+            <p id="teacher-name">TNAME</p>
             <p>Parent Name</p><p id="parent-name">PNAME</p>
             <p>Status</p><p id="status">Status</p>
+
+            
         </div>
+            <button type="button" onclick="download('admin.php')">Download Report</button>
+            <button type="button" onclick="generatePDF()">Download PDF Report</button>
         </div>
         <nav>
             <a href="#" class="logo">
