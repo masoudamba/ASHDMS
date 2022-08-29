@@ -6,23 +6,24 @@ if(isset($_POST['amount'])){
     $consumerSecret ='hOAX5KXA3OSUmoqc';
     
     $BussinessShortCode ='174379';
-    $PassKey ='';
+    $PassKey ='bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
 
     $PartyA = $_POST['phone'];
-    $AccountReference = '';
+    $AccountReference = 'ASHDMS';
 
-    $TransactionDesc = '';
+    $TransactionDesc = 'ASHDMS Acc No';
     $Amount =$_POST['amount'];
 
     $Timestamp = date('YmdHis');
+   
 
     $password = base64_encode($BussinessShortCode.$PassKey.$Timestamp);
-    $headers = ['Content-Type:application/json; charset = utf8'];
+    $headers = ['Content-Type:application/json; charset=utf8'];
 
     $access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
     $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
-    $CallBackUrl ='https://locohost.com/ASHDMS/callback_url.php'; 
+    $CallBackUrl =' https://agile-wildwood-40517.herokuapp.com/callback_url.php'; 
     $curl = curl_init($access_token_url);
     curl_setopt($curl,CURLOPT_HTTPHEADER,$headers);
     curl_setopt($curl,CURLOPT_RETURNTRANSFER,TRUE);
@@ -52,13 +53,13 @@ if(isset($_POST['amount'])){
         'AccountReference'=>$AccountReference,
         'TransactionDescription'=>$TransactionDesc
     );
-    $data_back = json_decode($curl_opt_data);
+    $data_back = json_encode($curl_opt_data);
     curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($curl,CURLOPT_POST,true);
-    curl_setopt($curl,CURLOPT_POSTFIELDS,$data_back);
+    curl_setopt($curl,CURLOPT_POSTFIELDS, $data_back);
     $curl_response = curl_exec($curl);
     print_r($curl_response); 
     echo $curl_response;
-}
+};
 
 ?>
