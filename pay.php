@@ -23,7 +23,7 @@ if(isset($_POST['amount'])){
     $access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
     $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
-    $CallBackUrl =' https://c004-41-80-96-169.in.ngrok.io/ASHDMS/callback_url.php'; 
+    $CallBackUrl =' https://agile-wildwood-40517.herokuapp.com/callback_url.php'; 
     $curl = curl_init($access_token_url);
     curl_setopt($curl,CURLOPT_HTTPHEADER,$headers);
     curl_setopt($curl,CURLOPT_RETURNTRANSFER,TRUE);
