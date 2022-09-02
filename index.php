@@ -10,7 +10,15 @@
 <!--fav-icon-->
 <link rel="shortcut icon" href="images/download.png"/>
 <style>
-   
+input[type=text], input[type=password],input[type=phone],input[type=action],input[type=email],
+input[type=number],textarea[type=msg],input[type=subject]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 .list{
   
   justify-content: left;
@@ -59,7 +67,87 @@
 
   
 }
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
 
+button:hover {
+  opacity: 0.8;
+}
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+  justify-content: center;
+}
+.container {
+  padding: 16px;
+  background-color:#006666;
+}
+
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+.modal-content {
+   width: 400px;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+
+}
 </style>
 </head>
 
@@ -127,11 +215,14 @@
                  </div>
                 </div>
                 </ul>
-                <li><a href="login.php">login</a></li>
+                <li><a class="" onclick="document.getElementById('id01').style.display='block'"
+                style="width:auto; border-radius: 5px; cursor: pointer;">Contact Us</a></li>
+                <li><a href="login.php">Login</a></li>
                 <li><a href="register.php">Signup</a></li>
                 
             </ul>
         </nav>
+       
      
 
         <!--main-content-->
@@ -146,7 +237,7 @@
                   for academic achievement since it enables you to set objectives and 
                   achieve them, building your confidence and setting the groundwork for future success.</p>
             <!--login-btn-->
-            <a href="rules.php" class="main-login" style="border-radius: 5px;">Our Rules</a>
+            <a href="/ASHDMS/Documents/ASH Rules and Regulations.pdf" class="main-login" style="border-radius: 5px;">Our Rules</a>
             </div>
             <!--img-->
             <div class="home-img" style="width: 500px;">
@@ -168,6 +259,41 @@
         <div class="arrow"></div>
         <span class="scroll">Scroll</span>
     </section>
+    <div id="id01"style="display:none;" class = "modal" >
+       
+       <form class="modal-content animate"  action="contact.php" method="post" style="
+            width: 400px;">
+     
+         <div class="imgcontainer"  >
+           
+            
+           <h2><span>Get In Touch</span> With Us</h2>
+           
+         </div>
+     
+         <div class="container">
+           <label for="name"><b>Full Name</b></label>
+           <input type="text" placeholder="Your Name" name="name" required>
+     
+           <label for="email"><b>Email</b></label>
+         <input type="email" placeholder="name@gmail.com" name="email">
+     
+         <label for="subject"><b>Subject</b></label>
+         <input type="subject" placeholder="Your Subject" name="subject">   
+    <label class="required" for="message">Your Message:</label><br />
+    <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+      
+    <button type="submit" >Send Message</button>
+         <div class="container" style="background-color:#f1f1f1">
+         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+     
+         </div>
+         
+       </form>
+     </div>
+     <!-- contact us modal end  -->
     
     <!--services----------------------->
     <section class="services">
@@ -252,7 +378,33 @@
         </div>
       </div>
     </footer>
-   
+    <script>
+  function sendEmail(){
+ Email.send({
+  Host : "gmx.gmail.com",
+  Username : "otienoamba81@gmail.com",
+  Password : "Oti.81,No.",
+  To : 'otienoamba81@gmail.com',
+  From : document.getElementById("email").value,
+  Subject : "New Message",
+  Body: "Name: " + document.getElementById("name").value
+      + <"br> Email: " + document.getElementById("email").value
+      + <"br> Subject: " + document.getElementById("subject").value
+      + <"br> Message: " + document.getElementById("message").value
+ }).then(
+  message => alert("Thanks for contacting us!")
+ );
+  }
+        // Get the modal
+        var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        </script>
 </body>
 
 </html>

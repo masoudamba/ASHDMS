@@ -1022,7 +1022,7 @@ img.avatar {
         </div>
 
         <div id="form_new_payment" style="display:none;" class = "modal">
-        <form  action="pay.php" method="post"style="width: 400px;">
+        <form  action="payment.php" method="post"style="width: 400px;">
               <div class="imgcontainer">
                 
                 <p style="font-size: 30px;">Make Payment Here: </p>

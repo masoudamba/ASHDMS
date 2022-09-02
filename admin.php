@@ -423,35 +423,20 @@ display:none;
   text-decoration: none;
   cursor: pointer;
 }
+.form_new_cases {
+   width: 400px;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
 	
 </style>
 
 <title>ASH Discipline Monitoring System</title>
 <!-- jsPDF library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
-<!--<script src="js/jsPDF/dist/jspdf.es.js" type="text/javascript">
 
-function downloadSimplePdf() {
-        
-        try {
-            window.jsPDF = window.jspdf.jsPDF;
-            var doc = new jsPDF();
-
-            doc.text(20, 20, 'Hello world!');
-            doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
-
-            // Add new page
-            doc.addPage();
-            doc.text(20, 20, 'Visit CodexWorld.com');
-
-            // Save the PDF
-            doc.save('document.pdf');
-        } catch (error) {
-            console.log(error);
-            alert(error);
-        }
-}
-</script>-->
 <script>
     var ID_user = 0;
     var All_Parents;
@@ -1489,7 +1474,7 @@ function downloadSimplePdf() {
 
                 <li><button type="button" onclick=""><b>BOM</b></button></li>
                 <li><button type="button" onclick="">Payment</button><li>
-                <li><button type="button" onclick=""><b>Comment</b></button></li>
+                
                 <li><button type="button" onclick="">Discipline Committee</button><li>
                 <li><button type="button" onclick="">Reports</button><li>
                 <li><a href="login.php">logout</a></li>
