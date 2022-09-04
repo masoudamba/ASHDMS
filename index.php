@@ -153,7 +153,7 @@ button:hover {
 
 <body>
 
-    <section class="main" style="background-image: url(images/slider1.jpg);">
+    <section class="main" style=" opacity: 1.0;background-image: url(images/slider1.jpg);">
         
         <nav>
             <a href="#" class="logo">
@@ -237,7 +237,7 @@ button:hover {
                   for academic achievement since it enables you to set objectives and 
                   achieve them, building your confidence and setting the groundwork for future success.</p>
             <!--login-btn-->
-            <a href="/ASHDMS/Documents/ASH Rules and Regulations.pdf" class="main-login" style="border-radius: 5px;">Our Rules</a>
+            <a href="/ASHDMS/Documents/ASH Rules and Regulations.pdf" target="_blank" class="main-login" style="border-radius: 5px;">Our Rules</a>
             </div>
             <!--img-->
             <div class="home-img" style="width: 500px;">
@@ -261,7 +261,7 @@ button:hover {
     </section>
     <div id="id01"style="display:none;" class = "modal" >
        
-       <form class="modal-content animate"  action="contact.php" method="post" style="
+       <form class="modal-content animate"  action="" method="post" style="
             width: 400px;">
      
          <div class="imgcontainer"  >
@@ -283,7 +283,7 @@ button:hover {
     <label class="required" for="message">Your Message:</label><br />
     <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
       
-    <button type="submit" >Send Message</button>
+    <button type="submit" onclick="sendEmail()" >Send Message</button>
          <div class="container" style="background-color:#f1f1f1">
          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
             </div>

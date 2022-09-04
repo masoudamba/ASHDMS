@@ -1,6 +1,19 @@
 <?php
 
+include("config.php");
+include("function.php");
+
 session_start();
+
+$user_data = "details=";
+try {
+    //session_start();
+    $user_data = "details=". $_SESSION['ParentID'];
+} catch (\Throwable $th) {
+//throw $th;                
+}
+
+$errorDB = "Payment Request Sent";
 
 if (isset($_POST['amount'])) {
     $amount = htmlspecialchars(strip_tags($_POST["amount"]));
@@ -44,6 +57,9 @@ if (isset($_POST['amount'])) {
     'TransactionDesc' => 'Purchases - '.date("F")
     );
 
+    //'CallBackURL' => 'http://localhost/ASHDMS/callback.php',
+    //'CallBackURL' => 'https://agile-wildwood-40517.herokuapp.com/callback.php',
+
     $data_string = json_encode($curl_post_data);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
@@ -54,22 +70,59 @@ if (isset($_POST['amount'])) {
         $_SESSION['CheckoutID'] = $data_string['CheckoutRequestID'];
         $checkoutId = $data_string['CheckoutRequestID'];
         // You are suppose to write a sql statement to save below data to the database
+        $sessionId = 0;
+        $parentID = "NO PARENT";
 
-        $this->create([
-            'user_id' => $_SESSION["id"],
-            'phone_number' => $phone,
-            'query_id' => $checkoutId,
-            'amount' => $amount,
-        ]);
+        try {
+            $sessionId = $_SESSION["id"];
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        try {
+            $parentID = $_SESSION["ParentID"];
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $sql_cases = "INSERT INTO payment(parent_id, user_id, phone_number ,query_id,
+            amount) 
+                VALUES('$parentID','$sessionId', '$phone', '$checkoutId', '$amount')";
+        
+        try {
+            $qry1 = mysqli_query($con, $sql_cases);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        //$this->create([
+        //    'user_id' => $_SESSION["id"],
+        //    'phone_number' => $phone,
+        //    'query_id' => $checkoutId,
+        //    'amount' => $amount,
+        //]);
 
         // end of database sql
         return true;
+        
     }elseif ($data_string["errorCode"] == "400.002.02") {
        $_SESSION['error'] = $data_string["errorMessage"];
+       $errorDB = "Payment Request Failed";
         return false;
     }else {
+        $errorDB = "Payment Request Failed";
         return false;
     }
+}else{
+    $errorDB = "Payment Request Failed";
+}
+
+try {
+    header("Location: parent.php?error=$errorDB&$user_data");
+	exit();
+} catch (\Throwable $th) {
+    //throw $th;
 }
 
 ?>

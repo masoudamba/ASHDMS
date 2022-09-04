@@ -864,13 +864,13 @@ button:hover {
 
         } catch (error) {
             //
-            alert(error);
+            console.log(error);
         }
 
         try {
 
             if(errorFromDB!=="No Error"){
-                alert(errorFromDB)
+                console.log(errorFromDB)
             }
 
         } catch (error) {
@@ -994,7 +994,7 @@ button:hover {
             }
 
         } catch (error) {
-            
+            console.log(error);
         }
     }
 
@@ -1029,7 +1029,7 @@ button:hover {
             
         }  
         catch (e) {  
-            alert(e);  
+            console.log(e);  
         }
 
         //collect fields from db data
@@ -1175,7 +1175,7 @@ button:hover {
             
         }  
         catch (e) {  
-            alert(e);  
+            console.log(e);  
         }
 
         //collect fields from db data
@@ -1309,7 +1309,7 @@ button:hover {
             
         }  
         catch (e) {  
-            alert(e);  
+            console.log(e);  
         }  
     }
 
@@ -1334,7 +1334,7 @@ button:hover {
                     h.style.display = "block";
                 }
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
             
         
@@ -1405,7 +1405,7 @@ button:hover {
             });
         }catch(e){
             //
-            alert(e);
+            console.log(e);
         }
 
         try {
@@ -1500,7 +1500,7 @@ button:hover {
          
             }catch(e){
             //
-                alert(e);
+                console.log(e);
             }
             
 

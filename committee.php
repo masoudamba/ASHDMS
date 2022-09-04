@@ -952,6 +952,19 @@ button:hover {
                                     console.log(error);
                                 }
                                 
+                            }else if('Active'===stateus){
+                                
+                                try {
+                                    row.cells.item(index).firstChild.firstChild.setAttribute('enabled',true);
+                                    row.cells.item(index).firstChild.firstChild.action = stateus;
+                                    row.cells.item(index).firstChild.firstChild.target = "_blank";
+
+                                    row.cells.item(index).firstChild.action = stateus;
+                                    row.cells.item(index).firstChild.setAttribute('enabled',true);
+                                    row.cells.item(index).firstChild.target = "_blank";
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }else{
                                 row.cells.item(index).firstChild.action = stateus;
                             }

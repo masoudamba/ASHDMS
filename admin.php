@@ -1470,7 +1470,7 @@ display:none;
                 
                 <li><button type="button" onclick="showStudentProfiles(true)"><b>Students Profile</b></button><li>
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
-                <li><button type="button" onclick="">School Rules</button><li>
+                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
 
                 <li><button type="button" onclick=""><b>BOM</b></button></li>
                 <li><button type="button" onclick="">Payment</button><li>

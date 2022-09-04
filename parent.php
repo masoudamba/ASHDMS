@@ -3,8 +3,12 @@
 include("config.php");
 include("function.php");
 
+session_start();
+
 $roww = $_GET['details'];
 $error = "No Error";
+
+$_SESSION['ParentID'] = $roww;
 
 //$row_decoded = json_decode($roww);
 
@@ -77,7 +81,7 @@ try {
                     if($t_id===$t_assoc['id']){
                         //$student_reg = $p_assoc['student_reg_no'];
                         $parent_name = $t_assoc['first_name']." ".$t_assoc['last_name'];
-                        
+                        $penalty = $t_assoc['phone_number'];
                     }
                     
                 }
@@ -280,7 +284,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* This style new case form */
 /* Full-width input fields */
-input[type=text], input[type=number],input[type=password],input[type=phone],input[type=action],input[type=email]{
+input[type=text], input[type=number],input[type=password],input[type=phone],input[type=action],input[type=number],textarea[type=msg],input[type=subject],input[type=email]{
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -337,7 +341,13 @@ img.avatar {
   width: 40%;
   border-radius: 50%;
 }
-
+.modal-content {
+   width: 400px;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
 .container {
   padding: 16px;
   justify-content: center;
@@ -355,6 +365,7 @@ img.avatar {
   height: 100%; 
   justify-content: center;
   padding-top: 60px;
+  overflow: auto; /* Enable scroll if needed */
   font-size: 17px;
 }
 
@@ -693,7 +704,7 @@ img.avatar {
                     }else if(index===8){
                         stateus = rowdata['date'];
                     }
-                    //row.cells.item(index).firstChild.value=rowdata['status'];
+                   
                     if(7!==index){
                         row.cells.item(index).firstChild.value=stateus;
                     }
@@ -704,7 +715,7 @@ img.avatar {
 
             try {
                     var ticha_ID_Element = document.getElementById('teacher_id_label');
-                    //ticha_ID_Element.innerHTML=" ID : "+rowdata['teacher_id'];
+                   
                     ticha_ID_Element.innerHTML=" ID : "+ttt_id;
             } catch (error) {
                 //
@@ -724,7 +735,7 @@ img.avatar {
             }
 
         } catch (error) {
-            //alert(error);
+           
         }
     }
 
@@ -784,6 +795,18 @@ img.avatar {
                     showPaymentForm(false);
                 } catch (error) {
                     
+                }
+
+                try {
+                    showStudentProfiles(false);
+
+                    var g = document.getElementById("form_new_case");
+                    var h = document.getElementById("the_cases");
+
+                    g.style.display = "none";
+                    h.style.display = "none";
+                } catch (error) {
+                    console.log(error);
                 }
 
                 g_pay.style.display = "block";
@@ -933,8 +956,10 @@ img.avatar {
             <ul class="menu" style="border-radius: 5px;">
                 <li><button type="button" onclick="showStudentProfiles(true)">Student Profile</button><li>
                 <li><button type="button" onclick="showAddCase(false)">Cases</button><li>
-                <li><button type="button" onclick="">comment</button><li>
+                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
                 <li><button type="button" onclick="showPaymentForm(true)">payment</button><li>
+                <li><button type="button" onclick="document.getElementById('id01').style.display='block'"
+                style="">Contact Us</li>
                 <li><a href ="login.php">logout</a><li>
                 
             </ul>
@@ -1020,6 +1045,41 @@ img.avatar {
   
         </form>
         </div>
+        <div id="id01"style="display:none;" class = "modal" >
+       
+       <form class="modal-content animate"  action="" method="post" style="
+            width: 400px;">
+     
+         <div class="imgcontainer"  >
+           
+            
+           <h2><span>Get In Touch</span> With Us</h2>
+           
+         </div>
+     
+         <div class="container">
+           <label for="name"><b>Full Name</b></label>
+           <input type="text" placeholder="Your Name" name="name" required>
+     
+           <label for="email"><b>Email</b></label>
+         <input type="email" placeholder="name@gmail.com" name="email">
+     
+         <label for="subject"><b>Subject</b></label>
+         <input type="subject" placeholder="Your Subject" name="subject">   
+    <label class="required" for="message">Your Message:</label><br />
+    <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+      
+    <button type="submit" onclick="sendEmail()" >Send Message</button>
+         <div class="container" style="background-color:#f1f1f1">
+         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+     
+         </div>
+         
+       </form>
+     </div>
+     <!-- contact us modal end  -->
 
         <div id="form_new_payment" style="display:none;" class = "modal">
         <form  action="payment.php" method="post"style="width: 400px;">
@@ -1036,10 +1096,7 @@ img.avatar {
 
                 <label for="phone"><b>Phone Number</b></label>
                 <input type="number" placeholder="254759053976" name="phone" required>
-            <!--
-                <label for="Pay"><b>Pay</b></label>
-                <input type="text" placeholder="pay_amount" name="Pay">
-            -->
+          
                 <button type="submit" >Submit</button>
            
             </div>
@@ -1060,7 +1117,7 @@ img.avatar {
                         <TD>No.</TD>
                         <TD>Case Id</TD>  
                         <TD>Teacher Name</TD>
-                        <TD>Penalty</TD>  
+                        <TD>Teacher Tel.</TD>  
                         <TD>Action Taken</TD>
                         <TD>Status</TD>
                         <TD>Verdict</TD>  
@@ -1108,5 +1165,15 @@ img.avatar {
    
    
 </body>
+<script>
+     // Get the modal
+     var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            </script>
 
 </html>        

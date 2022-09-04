@@ -94,6 +94,7 @@ $teacherID = $roww;
                     if($p_id===$p_assoc['id']){
                         $student_reg = $p_assoc['student_reg_no'];
                         $parent_name = $p_assoc['first_name']." ".$p_assoc['last_name'];
+                        $case_id = $p_assoc['phone_number'];
                         
                     }
                     
@@ -809,6 +810,7 @@ img.avatar {
             </label>
             <ul class="menu" style="border-radius: 5px; padding:5px;">
                 <!--<li><label id="teacher_id_label"><b>No id</b></label><li>-->
+                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
                 <li><button type="button" onclick="showStudentProfiles(true)"><b>Students Profile</b></button><li>
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
                 <li><button type="button" onclick="showAddCase(true)">Report Case</button><li>
@@ -1002,7 +1004,7 @@ img.avatar {
                         <TD>Student Reg Id</TD>
                         <TD>Student Name</TD>
                         <TD>Form</TD>
-                        <TD>Case Id</TD>
+                        <TD>Parent Tel.</TD>
                         <TD>Parent Name</TD>
                         <TD>Infraction</TD> 
                         <TD>Status</TD>

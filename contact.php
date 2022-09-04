@@ -12,9 +12,9 @@
                 " Message: $message.\n";
 
   $to = "otienoamba81@gmail.com";
-  $headers = "from : $email_from \r\n";
-  $headers = "Reply To: $email \r\n";
-  mail( $to, $subject,$email_body, $headers );
-  header("Location: index.php")
+  $headers = "from : $email_from";
+  //$headers = "Reply To: $email \r\n";
+  mail( $to, $subject,$email_body.$headers );
+  //header("Location: index.php")
 
 ?>
