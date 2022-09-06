@@ -52,13 +52,10 @@ if (isset($_POST['amount'])) {
     'PartyA' => $phone,
     'PartyB' => '174379',
     'PhoneNumber' => $phone,
-    'CallBackURL' => 'https://agile-wildwood-40517.herokuapp.com/callback.php',
-    'AccountReference' => $_SESSION["uname"].$timestamp ,
-    'TransactionDesc' => 'Purchases - '.date("F")
+    'CallBackURL' => 'https://1b7c-2c0f-fe38-2247-68bc-802-baa1-4268-39d1.in.ngrok.io/ASHDMS/callback.php',
+    'AccountReference' => $_SESSION["ParentID"].' '.$timestamp ,
+    'TransactionDesc' => 'Paybill online - '.date("F")
     );
-
-    //'CallBackURL' => 'http://localhost/ASHDMS/callback.php',
-    //'CallBackURL' => 'https://agile-wildwood-40517.herokuapp.com/callback.php',
 
     $data_string = json_encode($curl_post_data);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -66,44 +63,22 @@ if (isset($_POST['amount'])) {
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
     $curl_response = curl_exec($curl);
     $data_string= json_decode($curl_response, true);
+
     if(isset($data_string["ResponseCode"]) && $data_string["ResponseCode"] == 0){
         $_SESSION['CheckoutID'] = $data_string['CheckoutRequestID'];
         $checkoutId = $data_string['CheckoutRequestID'];
         // You are suppose to write a sql statement to save below data to the database
+        $parentID = $_SESSION["ParentID"];
         $sessionId = 0;
-        $parentID = "NO PARENT";
-
-        try {
-            $sessionId = $_SESSION["id"];
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
-        try {
-            $parentID = $_SESSION["ParentID"];
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
-        $sql_cases = "INSERT INTO payment(parent_id, user_id, phone_number ,query_id,
-            amount) 
-                VALUES('$parentID','$sessionId', '$phone', '$checkoutId', '$amount')";
-        
+        $con= mysqli_connect("localhost","root","","ashdms");
+        $sql_cases = "INSERT INTO payment(parent_id, user_id, phone_number, query_id, amount) 
+        VALUES ('$parentID', $sessionId, '$phone', '$checkoutId', '$amount')";
         try {
             $qry1 = mysqli_query($con, $sql_cases);
-
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
-
-        //$this->create([
-        //    'user_id' => $_SESSION["id"],
-        //    'phone_number' => $phone,
-        //    'query_id' => $checkoutId,
-        //    'amount' => $amount,
-        //]);
-
-        // end of database sql
+        die('kdjjjd');
         return true;
         
     }elseif ($data_string["errorCode"] == "400.002.02") {
