@@ -1069,8 +1069,7 @@ img.avatar {
     <label class="required" for="message">Your Message:</label><br />
     <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
       
-    <button type="submit" onclick="sendEmail()" >Send Message</button>
-         <div class="container" style="background-color:#f1f1f1">
+    <button type="submit">Send Message</button><button type="submit" name="submit" value="Submit"> Send Message</button>     <div class="container" style="background-color:#f1f1f1">
          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
             </div>
         </div>

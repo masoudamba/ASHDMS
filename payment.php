@@ -52,7 +52,7 @@ if (isset($_POST['amount'])) {
     'PartyA' => $phone,
     'PartyB' => '174379',
     'PhoneNumber' => $phone,
-    'CallBackURL' => 'https://1b7c-2c0f-fe38-2247-68bc-802-baa1-4268-39d1.in.ngrok.io/ASHDMS/callback.php',
+    'CallBackURL' => 'https://ce98-105-163-0-205.ap.ngrok.io/ASHDMS/callback.php',
     'AccountReference' => $_SESSION["ParentID"].' '.$timestamp ,
     'TransactionDesc' => 'Paybill online - '.date("F")
     );
@@ -70,9 +70,8 @@ if (isset($_POST['amount'])) {
         // You are suppose to write a sql statement to save below data to the database
         $parentID = $_SESSION["ParentID"];
         $sessionId = 0;
-        $con= mysqli_connect("localhost","root","","ashdms");
-        $sql_cases = "INSERT INTO payment(parent_id, user_id, phone_number, query_id, amount) 
-        VALUES ('$parentID', $sessionId, '$phone', '$checkoutId', '$amount')";
+        $sql_cases = "INSERT INTO payment (parent_id, user_id, phone_number, query_id,
+            amount) VALUES ($parentID, $sessionId, $phone, $checkoutId, $amount)";
         try {
             $qry1 = mysqli_query($con, $sql_cases);
         } catch (\Throwable $th) {
