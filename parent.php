@@ -5,7 +5,13 @@ include("function.php");
 
 session_start();
 
-$roww = $_GET['details'];
+$roww = 1;
+try {
+    $roww = $_GET['details'];
+} catch (\Throwable $th) {
+    $roww = $_SESSION['ParentID'];   
+}
+
 $error = "No Error";
 
 $_SESSION['ParentID'] = $roww;
@@ -960,6 +966,7 @@ img.avatar {
                 <li><button type="button" onclick="showPaymentForm(true)">payment</button><li>
                 <li><button type="button" onclick="document.getElementById('id01').style.display='block'"
                 style="">Contact Us</li>
+                <li><a href ="index.php">Home</a><li>
                 <li><a href ="login.php">logout</a><li>
                 
             </ul>
@@ -1081,7 +1088,7 @@ img.avatar {
      <!-- contact us modal end  -->
 
         <div id="form_new_payment" style="display:none;" class = "modal">
-        <form  action="payment.php" method="post"style="width: 400px;">
+        <form  class ="modal-content animate"action="pay.php" method="post"style="width: 400px;">
               <div class="imgcontainer">
                 
                 <p style="font-size: 30px;">Make Payment Here: </p>

@@ -241,20 +241,27 @@ img.avatar {
 }
 
 /* The Modal (background) */
+.modal-content {
+   width: 400px;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
 .modal {
-  display: flex; /* Hidden by default */
-  position: absolute; 
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  justify-content: center;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   padding-top: 60px;
-  font-size: 17px;
+
 }
-
-
 /* This end of the style of new case form */
 
 /* Button used to open the chat form - fixed at the bottom of the page */
@@ -814,6 +821,7 @@ img.avatar {
                 <li><button type="button" onclick="showStudentProfiles(true)"><b>Students Profile</b></button><li>
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
                 <li><button type="button" onclick="showAddCase(true)">Report Case</button><li>
+                <li><a href ="index.php">Home</a><li>
                 <li><a href="login.php">logout</a></li>
                 
             </ul>
@@ -900,7 +908,7 @@ img.avatar {
         </div>
 
         <div id="form_new_case" style="display:none;" class = "modal">
-        <form  action="teacher_add_case.php" method="post"style="width: 400px;">
+        <form   class ="modal-content animate"action="teacher_add_case.php" method="post"style="width: 400px;">
               <div class="imgcontainer">
                 
                 <p style="font-size: 30px;">Report Case Here: </p>

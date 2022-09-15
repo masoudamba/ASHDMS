@@ -60,10 +60,11 @@ if (isset($_POST['amount'])) {
             $stmt = $db->prepare("INSERT INTO payment(`parent_id`,`phone_number`, `query_id`, `amount`)
                 VALUES (:parent_id, :phonenumber, :checkoutId, :amount)");
             $stmt->execute([':parent_id'=>$parent_id, ':phonenumber'=>$phone, ':checkoutId'=>$checkoutId, ':amount'=>$amount]);
-            header("Location: parent.php?success=Payment accepted for processing. Check your phone and complete the transaction");
+            header("Location: parent.php?success=Payment accepted for processing. Check your phone and complete the transaction&details='$parent_id'");
         } catch (PDOException $e) {
             $error = $e->getMessage();
-            header("Location: parent.php?error=Error occured during processing. Ensure all details are filled and retry");
+            //header("Location: parent.php?error=Error occured during processing. Ensure all details are filled and retry&details='$parent_id'");
+            header("Location: parent.php?error='$error'&details='$parent_id'");
         }
     }
 }

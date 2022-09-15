@@ -644,8 +644,7 @@ button:hover {
             element1.name = btnName;  
             element1.setAttribute('value', ' ... '); // or element1.value = "button";  
             element1.onclick = function () { editRow(btnName); }  
-            //element1.setAttribute('disabled',false);
-            //cell1.appendChild(element1);
+          
 
             
             var element2 = document.createElement("input");  
@@ -654,8 +653,7 @@ button:hover {
             element2.name = btnName;  
             element2.setAttribute('value', ' ');
             element2.onclick = function () { editRow_Case(btnName); } 
-            // or element1.value = "button";  
-            //.onclick = function () { confirmRow(btnName); }
+          
             element2.setAttribute('enabled',true);
             
             if(Case_Level === 'Completed'){
@@ -892,7 +890,7 @@ button:hover {
         }
 
         try {
-            //populateStudentsNewCase(students);
+          
         } catch (error) {
             console.log(error);
         }
@@ -1018,10 +1016,7 @@ button:hover {
                 
                 if (rowrowObj.name == btnName) {  
 
-                    //table.deleteRow(i);  
-                    //rowCount--;  
-                    //showCaseOfId(case_id);
-                    //alert(case_id);
+                   
                     break;
                 }  
             }
@@ -1164,10 +1159,7 @@ button:hover {
                 
                 if (rowrowObj.name == btnName) {  
 
-                    //table.deleteRow(i);  
-                    //rowCount--;  
-                    //showCaseOfId(case_id);
-                    //alert(case_id);
+                    
                     break;
                 }  
             }
@@ -1220,9 +1212,6 @@ button:hover {
 
 
 
-        //var popup = document.getElementById("popup");
-
-        //replace value in popup with the ones from db
         try {
 
             var ac = document.getElementById("admin-id-update");
@@ -1265,7 +1254,7 @@ button:hover {
         }  
         
         
-        //popup.style.display = "block";
+        
     }
 
     function showUpdateCase(showing){
@@ -1315,7 +1304,7 @@ button:hover {
 
     function showAddCase(selectedValue){
 
-            //var g = document.getElementById("form_new_case");
+          
             var g = document.getElementById("home-content");
             var h = document.getElementById("the_cases");
 
@@ -1326,9 +1315,6 @@ button:hover {
                     g.style.display = "block";
                     h.style.display = "none";
 
-                    //var t_id = document.getElementById("teacher_no");
-                    //t_id.value = ID_user;
-                    //t_id.setAttribute('disabled',true);
                 }else{
                     g.style.display = "none";
                     h.style.display = "block";
@@ -1579,7 +1565,10 @@ button:hover {
                 </div>
                 </ul>
                 <ul class="menu" style="border-radius: 5px; padding:5px;">
+                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
+
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
+                <li><a href ="index.php">Home</a><li>
                 <li><a href="login.php">Logout</a></li>
                 </ul>
                 

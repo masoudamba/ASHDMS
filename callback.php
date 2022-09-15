@@ -9,6 +9,8 @@ $data = file_get_contents('php://input');
 $json = json_decode($data);
 $Body = $json->Body;
 
+$parent_id = $_SESSION['id'];
+
 if ($ResultCode != 0) {
     //to do send a message to the user to retry again
     exit();
@@ -35,10 +37,11 @@ function confirmPayment($MpesaReceiptNumber = null, $checkOutId = null)
     try {
         $stmt = $db->prepare("UPDATE payment SET `mpesa_receipt`=:MpesaReceiptNumber, `status`=:status WHERE `query_id`=:checkOutId");
         $stmt->execute([':receipt' => $MpesaReceiptNumber, ':status' => 'paid', ':checkOutId' => $checkOutId]);
-        header("Location: parent.php?error=Payment successfully processed");
+        header("Location: parent.php?error=Payment successfully processed&details='$parent_id'");
         return true;
     } catch (PDOException $e) {
         $error = $e->getMessage();
+        header("Location: parent.php?error='$error'&details='$parent_id'");
     }
 }
 //send success sms to user

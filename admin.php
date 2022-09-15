@@ -8,9 +8,8 @@ $error = "No Error";
 
 $teacherID = $roww;
 
- //$sql_cases = "SELECT * FROM cases WHERE teacher_id = $teacherID";
  $sql_cases = "SELECT * FROM cases";
- //$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
+ 
 
  $sql_students = "SELECT * FROM students";
 
@@ -18,6 +17,68 @@ $teacherID = $roww;
 
  $sql_parents = "SELECT * FROM parents";
 
+ $sql_bom = "SELECT * FROM bom";
+
+ $sql_payment = "SELECT * FROM payment";
+
+ $sql_committee = "SELECT * FROM committee";
+
+ //sort payment
+ $indexPayment = 0;
+ $qryPayment;
+ $val_payment;
+ $options_payment = array();
+
+ try {
+    //code...
+    $qryPayment = mysqli_query($con, $sql_payment);   
+   
+   while($tichaTeacher = mysqli_fetch_assoc($qryPayment)){
+       
+       $options_payment[$indexPayment] = $tichaTeacher;
+       $indexPayment = $indexPayment+1;
+       
+   }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+ //sort bom
+ $indexBom = 0;
+ $qryBom;
+ $val_bom;
+ $options_bom = array();
+
+ try {
+    //code...
+    $qryBom = mysqli_query($con, $sql_bom);   
+   
+   while($tichaTeacher = mysqli_fetch_assoc($qryBom)){
+       $options_bom[ $indexBom] = $tichaTeacher;
+       $indexBom =  $indexBom+1;
+       
+   }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+ //sort committee
+ $indexCommittee = 0;
+ $qryCommittee;
+ $val_committee;
+ $options_committee = array();
+
+ try {
+    //code...
+    $qryCommittee = mysqli_query($con, $sql_committee);   
+   
+   while($tichaTeacher = mysqli_fetch_assoc($qryCommittee)){
+       
+       $options_committee[$indexCommittee] = $tichaTeacher;
+       $indexCommittee = $indexCommittee+1;
+       
+   }
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
  //sort teachers
  $indexTeachers = 0;
  $qryTeachers;
@@ -29,7 +90,7 @@ $teacherID = $roww;
     $qryTeachers = mysqli_query($con, $sql_teachers);   
    
    while($tichaTeacher = mysqli_fetch_assoc($qryTeachers)){
-       //$valEcho = json_encode($ticha);
+       
        $options_teachers[$indexTeachers] = $tichaTeacher;
        $indexTeachers = $indexTeachers+1;
        
@@ -49,7 +110,7 @@ $teacherID = $roww;
     $qryParents = mysqli_query($con, $sql_parents);   
    
    while($tichaParent = mysqli_fetch_assoc($qryParents)){
-       //$valEcho = json_encode($ticha);
+       
        $options_parents[$indexParent] = $tichaParent;
        $indexParent = $indexParent+1;
        
@@ -70,7 +131,7 @@ $teacherID = $roww;
     $qryStudents = mysqli_query($con, $sql_students);   
    
    while($tichaStudent = mysqli_fetch_assoc($qryStudents)){
-       //$valEcho = json_encode($ticha);
+       
        $options_students[$indexStudent] = $tichaStudent;
        $indexStudent = $indexStudent+1;
        
@@ -97,7 +158,7 @@ $teacherID = $roww;
    
    
    while($ticha = mysqli_fetch_assoc($qry1)){
-       //$valEcho = json_encode($ticha);
+      
        $options[$index] = $ticha;
        $index = $index+1;
        
@@ -113,7 +174,7 @@ $teacherID = $roww;
     if((mysqli_num_rows($qryProfile)) > 0){
 
         while($ticha_profile = mysqli_fetch_assoc($qryProfile)){
-            //$valEcho = json_encode($ticha);
+            
     
             $parent_name = " No name";
             $student_reg = "No reg";
@@ -193,7 +254,7 @@ $teacherID = $roww;
             
         }
 
-        //$val_profiles = json_encode($options_profiles);
+        
      }
  } catch (\Throwable $th) {
     //throw $th;
@@ -202,7 +263,7 @@ $teacherID = $roww;
 
  
  
- //$qry1 = $con->query($sql_cases);
+ 
 
  if(isset($_GET['error'])){
     $error = $_GET['error'];
@@ -404,8 +465,42 @@ display:none;
 @keyframes zoom {
   from {transform:scale(0)}
   to {transform:scale(1)}
+}/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
 }
 
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+.modal-content {
+   width: 400px;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+
+}
 /* The Close Button */
 .close {
   position: absolute;
@@ -443,15 +538,23 @@ display:none;
     var All_Teachers;
     var All_Students;
     var All_Cases;
+    var All_Committee;
+    var All_Payments;
+    var All_Bom;
     var Case_Level = "Pending";
 
-    function setAllData(parents,students,teachers,cases){
+   
+
+    function setAllData(parents,students,teachers,cases,committee,payment,bom){
       
         try {
             All_Parents = parents;
             All_Teachers = teachers;
             All_Students = students;
             All_Cases = cases;
+            All_Committee = committee;
+            All_Payments = payment;
+            All_Bom = bom;
             
         } catch (error) {
             console.log(error);
@@ -464,6 +567,26 @@ display:none;
             console.log(error);
         }
         
+        try {
+            populateBomProfiles(bom,"No Error")
+        } catch (error) {
+            //
+            console.log(error);
+        }
+        try {
+            populateCommitteeProfiles(committee,"No Error")
+        } catch (error) {
+            //
+            console.log(error);
+        }
+        try {
+            populatePaymentProfiles(payment,"No Error")
+        } catch (error) {
+            //
+            console.log(error);
+        }
+
+
     }
 
     function setIDUser(id,students){
@@ -686,6 +809,7 @@ display:none;
 
           
     }
+
     function addPopups(rowdata_orig) {  
         var popup = document.getElementById("popup");  
         var span = document.getElementsByClassName("close")[0];
@@ -1085,6 +1209,7 @@ display:none;
             var j = document.getElementById("form_update_case");
 
             showStudentProfiles(false);
+            showBomProfiles(false);
 
             if(showing){
                 j.style.display = "block";
@@ -1128,6 +1253,9 @@ display:none;
             var h = document.getElementById("the_cases");
 
             showStudentProfiles(false);
+            showBomProfiles(false);
+            showPaymentProfiles(false);
+
 
             try {
                 if(selectedValue){
@@ -1148,11 +1276,484 @@ display:none;
         
     }
 
+    function showAddBom(selectedValue){
+
+            var g = document.getElementById("form_new_bom");
+            var h = document.getElementById("the_cases");
+            var k = document.getElementById("bom_div");
+
+            //showBomProfiles(false);
+
+            try {
+                if(selectedValue){
+                    g.style.display = "block";
+                    k.style.display = "none";
+
+                    var t_id = document.getElementById("teacher_no_bom");
+                    t_id.value = ID_user;
+                   
+                }else{
+                    g.style.display = "none";
+                    k.style.display = "block";
+                }
+
+                h.style.display = "none";
+            } catch (error) {
+                //alert(error);
+                console.log(error);
+            }
+            
+        
+    }
+    
+    function showAddCom(selectedValue){
+
+         var g = document.getElementById("form_new_com");
+         var h = document.getElementById("the_cases");
+         var k = document.getElementById("committee_div");
+
+        //showBomProfiles(false);
+
+        try {
+        if(selectedValue){
+            g.style.display = "block";
+            k.style.display = "none";
+
+            var t_id = document.getElementById("teacher_no_com");
+            t_id.value = ID_user;
+        
+        }else{
+            g.style.display = "none";
+            k.style.display = "block";
+        }
+
+        h.style.display = "none";
+        } catch (error) {
+            //alert(error);
+            console.log(error);
+        }
+
+
+    }
+
+    function showBomProfiles(selectValue){
+
+        try {
+            
+            var iProfile = document.getElementById("bom_div");
+
+            if(selectValue){
+                
+                iProfile.style.display = "block";
+
+                var g = document.getElementById("form_new_bom");
+                var h = document.getElementById("the_cases");
+                var j = document.getElementById("form_update_case");
+                var f = document.getElementById("student_div");
+                var m = document.getElementById("committee_div");
+                g.style.display = "none";
+                h.style.display = "none";
+                j.style.display = "none";
+                f.style.display = "none";
+                m.style.display = "none";
+
+                
+
+            }else{
+                iProfile.style.display = "none";
+            }
+        } catch (error) {
+            //
+        }
+
+    }
+
+    function showPaymentProfiles(selectValue){
+
+        try {
+            
+            var iProfile = document.getElementById("payment_div");
+
+            if(selectValue){
+                
+                iProfile.style.display = "block";
+
+                var g = document.getElementById("form_new_bom");
+                var h = document.getElementById("the_cases");
+                var j = document.getElementById("form_update_case");
+                var f = document.getElementById("student_div");
+                var m = document.getElementById("committee_div");
+                var l = document.getElementById("bom_div");
+                g.style.display = "none";
+                h.style.display = "none";
+                j.style.display = "none";
+                f.style.display = "none";
+                m.style.display = "none";
+                l.style.display = "none";
+
+                
+
+            }else{
+                iProfile.style.display = "none";
+            }
+            } catch (error) {
+                //
+            }
+
+            }
+
+    function showComProfiles(selectValue){
+
+        try {
+        
+        var iProfile = document.getElementById("committee_div");
+
+        if(selectValue){
+            
+            iProfile.style.display = "block";
+
+            var g = document.getElementById("form_new_com");
+            var h = document.getElementById("the_cases");
+            var j = document.getElementById("form_update_case");
+            var f = document.getElementById("student_div");
+            var l = document.getElementById("bom_div");
+            var m = document.getElementById("payment_div");
+
+            g.style.display = "none";
+            h.style.display = "none";
+            j.style.display = "none";
+            f.style.display = "none";
+            l.style.display = "none";
+            m.style.display = "none";
+
+            
+
+        }else{
+            iProfile.style.display = "none";
+        }
+        } catch (error) {
+            //
+        }
+
+        }
+
+    function addRowCom(tableID) {  
+        var table = document.getElementById(tableID);  
+        var rowCount = table.rows.length;  
+        var row = table.insertRow(rowCount);  
+        rowCount = rowCount-1;
+
+        try{
+            var rowCounttt = table.rows.length - 1; 
+            var x = table.rows[rowCounttt].cells[0].value;
+            rowCount = x; 
+        }catch(e){
+           
+        }
+          
+        //Column 1    
+        var cell2 = row.insertCell(0);  
+        cell2.innerHTML = rowCount + 1;  
+        //Column 2  
+        var cell3 = row.insertCell(1);  
+        var element3 = document.createElement("input");  
+        element3.type = "text"; 
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+
+        //Column 3  
+        var cell3 = row.insertCell(2);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";  
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+        //Column 4  
+        var cell3 = row.insertCell(3);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+
+        //Column 5 
+        var cell3 = row.insertCell(4);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+        
+
+          
+    }
+    function addRowComBom(tableID) {  
+        var table = document.getElementById(tableID);  
+        var rowCount = table.rows.length;  
+        var row = table.insertRow(rowCount);  
+        rowCount = rowCount-1;
+
+        try{
+            var rowCounttt = table.rows.length - 1; 
+            var x = table.rows[rowCounttt].cells[0].value;
+            rowCount = x; 
+        }catch(e){
+           
+        }
+          
+        //Column 1    
+        var cell2 = row.insertCell(0);  
+        cell2.innerHTML = rowCount + 1;  
+        //Column 2  
+        var cell3 = row.insertCell(1);  
+        var element3 = document.createElement("input");  
+        element3.type = "text"; 
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+
+        //Column 3  
+        var cell3 = row.insertCell(2);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";  
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+        //Column 4  
+        var cell3 = row.insertCell(3);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+
+        //Column 5 
+        var cell3 = row.insertCell(4);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+        
+
+          
+    }
+
+    function addRowPayment(tableID) {  
+        var table = document.getElementById(tableID);  
+        var rowCount = table.rows.length;  
+        var row = table.insertRow(rowCount);  
+        rowCount = rowCount-1;
+
+        try{
+            var rowCounttt = table.rows.length - 1; 
+            var x = table.rows[rowCounttt].cells[0].value;
+            rowCount = x; 
+        }catch(e){
+           
+        }
+          
+        //Column 1    
+        var cell2 = row.insertCell(0);  
+        cell2.innerHTML = rowCount + 1;  
+        //Column 2  
+        var cell3 = row.insertCell(1);  
+        var element3 = document.createElement("input");  
+        element3.type = "text"; 
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+
+        //Column 3  
+        var cell3 = row.insertCell(2);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";  
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+        //Column 4  
+        var cell3 = row.insertCell(3);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+
+        //Column 5 
+        var cell3 = row.insertCell(4);  
+        var element3 = document.createElement("input");  
+        element3.type = "text";
+        element3.setAttribute('disabled',true);   
+        cell3.appendChild(element3);
+        
+
+          
+    }
+
+    function populateBomProfiles(rowdata_orig,errorFromDB){
+        var teacherID;
+
+        try{
+
+           
+
+            var table = document.getElementById('bom_profiles');  
+            
+            var ttt_id= "No id";
+
+            rowdata_orig.forEach(rowdata => {
+                var rowCount = table.rows.length;
+
+                addRowComBom('bom_profiles');
+
+                var row = table.rows[rowCount];
+              
+                stateus = "null";
+                try {
+                    for (let index = 1; index < 4; index++) {
+                        if(index===1){
+                            stateus = rowdata['first_name'] +" "+rowdata['last_name'];
+                        }else if(index===2){
+                            stateus = rowdata['email'];
+                        }else if(index===3){
+                            stateus = rowdata['position'];
+                        }   
+                       
+                        row.cells.item(index).firstChild.value=stateus;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                
+            });
+        }catch(e){
+            //
+            //alert(e);
+            console.log(e);
+        }
+
+        try {
+
+            if(errorFromDB!=="No Error"){
+               
+                console.log(errorFromDB);
+            }
+
+        } catch (error) {
+           
+            console.log(error);
+        }
+    }
+
+    
+    function populatePaymentProfiles(rowdata_orig,errorFromDB){
+        var teacherID;
+
+        try{
+
+           
+
+            var table = document.getElementById('payment_profiles');  
+            
+            var ttt_id= "No id";
+
+            rowdata_orig.forEach(rowdata => {
+                var rowCount = table.rows.length;
+
+                addRowPayment('payment_profiles');
+
+                var row = table.rows[rowCount];
+              
+                stateus = "null";
+                try {
+                    for (let index = 1; index < 4; index++) {
+                        if(index===1){
+                            stateus = rowdata['phone_number'];
+                        }else if(index===2){
+                            stateus = rowdata['mpesa_receipt'];
+                        }else if(index===3){
+                            stateus = rowdata['amount'];
+                        } else if(index===3){
+                            stateus = rowdata['status'];  
+                        }
+                        row.cells.item(index).firstChild.value=stateus;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                
+            });
+        }catch(e){
+            //
+            //alert(e);
+            console.log(e);
+        }
+
+        try {
+
+            if(errorFromDB!=="No Error"){
+               
+                console.log(errorFromDB);
+            }
+
+        } catch (error) {
+           
+            console.log(error);
+        }
+    }
+    
+    function populateCommitteeProfiles(rowdata_orig,errorFromDB){
+        var teacherID;
+
+        try{
+
+           
+
+            var table = document.getElementById('committee_profiles');  
+            
+            var ttt_id= "No id";
+
+            rowdata_orig.forEach(rowdata => {
+                var rowCount = table.rows.length;
+
+                addRowCom('committee_profiles');
+
+                var row = table.rows[rowCount];
+              
+                stateus = "null";
+                try {
+                    for (let index = 1; index < 4; index++) {
+                        if(index===1){
+                            stateus = rowdata['first_name'] +" "+rowdata['last_name'];
+                        }else if(index===2){
+                            stateus = rowdata['email'];
+                        }else if(index===3){
+                            stateus = rowdata['position'];
+                        }   
+                       
+                        row.cells.item(index).firstChild.value=stateus;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                
+            });
+        }catch(e){
+            //
+            //alert(e);
+            console.log(e);
+        }
+
+        try {
+
+            if(errorFromDB!=="No Error"){
+               
+                console.log(errorFromDB);
+            }
+
+        } catch (error) {
+           
+            console.log(error);
+        }
+    }
+
     function showStudentProfiles(selectValue){
 
         try {
             
             var iProfile = document.getElementById("student_div");
+            showBomProfiles(false);
+            showPaymentProfiles(false);
 
             if(selectValue){
                 
@@ -1472,11 +2073,11 @@ display:none;
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
                 <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
 
-                <li><button type="button" onclick=""><b>BOM</b></button></li>
-                <li><button type="button" onclick="">Payment</button><li>
+                <li><button type="button" onclick="showBomProfiles(true)"><b>BOM</b></button></li>
+                <li><button type="button" onclick="showPaymentProfiles(true)">Payment</button><li>
                 
-                <li><button type="button" onclick="">Discipline Committee</button><li>
-                <li><button type="button" onclick="">Reports</button><li>
+                <li><button type="button" onclick="showComProfiles(true)">Discipline Committee</button><li>
+                <li><button type="button" onclick="window.location.href='reports.php'">Reports</button><li>
                 <li><a href="login.php">logout</a></li>
                 
             </ul>
@@ -1498,6 +2099,31 @@ display:none;
                 $valTeachers = array();
                 $valParents = array();
 
+                $valBom = array();
+                $valPayment= array();
+                $valCommittee = array();
+
+                //encode payment data
+                try {
+                    //code...
+                    $valPayment = json_encode($options_payment);
+                } catch (\Throwable $th) {
+                    
+                }
+                //encode committee data
+                try {
+                    //code...
+                    $valCommittee = json_encode($options_committee);
+                } catch (\Throwable $th) {
+                    
+                }
+                //encode bom data
+                try {
+                    //code...
+                    $valBom = json_encode($options_bom);
+                } catch (\Throwable $th) {
+                    
+                }
                 //encode teachres data
                 try {
                     //code...
@@ -1559,7 +2185,7 @@ display:none;
                             echo "<script type='text/javascript'> window.onload = function(){
                                 populateTableCases($valEcho,'$errorId',$val_profiles,$roww,$valStudents);
                                 addPopups($valEcho); 
-                                setAllData($valParents,$valStudents,$valTeachers,$valEcho);
+                                setAllData($valParents,$valStudents,$valTeachers,$valEcho,$valCommittee,$valPayment,$valBom);
                             };  </script>";
                         }
                     } catch (Throwable $th) {
@@ -1583,7 +2209,7 @@ display:none;
         </div>
 
         <div id="form_new_case" style="display:none;" class = "modal">
-        <form  action="admin_add_student.php" method="post"style="width: 400px;">
+        <form  class="modal-content animate"action="admin_add_student.php" method="post"style="width: 400px;">
               <div class="imgcontainer">
                 
                 <p style="font-size: 30px;">Enter new Student Details: </p>
@@ -1612,6 +2238,138 @@ display:none;
           
             <div class="container" style="background-color:#f1f1f1">
               <button type="button" onclick="showAddCase(false)" class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+        </form>
+        </div>
+        <div  id="payment_div" style="display:none;" class="payment_profiles">
+               
+
+                <TABLE id="payment_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
+                    <TR>
+                        <TD>No.</TD>
+                        <TD> phone</TD>
+                        <TD> Mpesa_receipt</TD>
+                        <TD>Amount</TD> 
+                        <TD>Status</TD> 
+                        <TD>  </TD>
+                    
+                    </TR>  
+                    
+                </TABLE>
+        </div>
+        <div  id="committee_div" style="display:none;" class="committee_profiles">
+                <INPUT type="button" value="Create New Committee " onclick="showAddCom(true)" />
+
+                <TABLE id="committee_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
+                    <TR>
+                        <TD>No.</TD>
+                        <TD> Name</TD>
+                        <TD> Email</TD>
+                        <TD>Position</TD> 
+                        <TD>  </TD>
+                    
+                    </TR>  
+                    
+                </TABLE>
+        </div>
+         <!-- Creating new Members of Board Of Management -->
+         <div id="form_new_com" style="display:none;" class = "modal">
+        <form  class="modal-content animate" action="admin_add_com.php" method="post"style="width: 400px;">
+              <div class="imgcontainer">
+                
+                <p style="font-size: 30px;">Enter new Committee Details: </p>
+            
+              </div>
+            
+            <div class="container">
+                <label for="teacher"><b>Admin ID</b></label>
+                <input id="teacher_no_com" type ="text" placeholder="Admin id" name="teacher_com_id" required>
+
+                <label for="com_FName"><b> First Name</b></label>
+                <input type ="text" placeholder="Enter first name" name="com_FName" required>
+
+                <label for="com_LName"><b> Last Name</b></label>
+                <input type ="text" placeholder="Enter last name" name="com_LName" required>
+    
+                <label for="com_email"><b>Email</b></label>
+                <input type ="email" placeholder="Enter email" name="com_email" required>
+
+                <label for="position"><b>Position</b></label>
+                <input type ="text" placeholder="Enter position" name="position" required>
+
+                <label for="uname"><b>Username</b></label>
+                <input type ="text" placeholder="Create username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Create Password" name="psw" required>
+
+                <button type="submit" >Submit</button>
+    
+            </div>
+          
+            <div class="container" style="background-color:#f1f1f1">
+              <button type="button" onclick="showAddCom(false)" class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+        </form>
+        </div>
+
+
+        <div  id="bom_div" style="display:none;" class="bom_profiles">
+                <INPUT type="button" value="Create New BOM Member" onclick="showAddBom(true)" />
+
+                <TABLE id="bom_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
+                    <TR>
+                        <TD>No.</TD>
+                        <TD>BOM Name</TD>
+                        <TD>BOM Email</TD>
+                        <TD>Position</TD> 
+                        <TD>  </TD>
+                    
+                    </TR>  
+                    
+                </TABLE>
+        </div>
+
+
+        <!-- Creating new Members of Board Of Management -->
+        <div id="form_new_bom" style="display:none;" class = "modal">
+        <form  class="modal-content animate" action="admin_add_bom.php" method="post"style="width: 400px;">
+              <div class="imgcontainer">
+                
+                <p style="font-size: 30px;">Enter new BOM Details: </p>
+            
+              </div>
+            
+            <div class="container">
+                <label for="teacher"><b>Admin ID</b></label>
+                <input id="teacher_no_bom" type ="text" placeholder="Admin id" name="teacher_bom_id" required>
+
+                <label for="bom_FName"><b> First Name</b></label>
+                <input type ="text" placeholder="Enter bom first name" name="bom_FName" required>
+
+                <label for="bom_LName"><b> Last Name</b></label>
+                <input type ="text" placeholder="Enter bom last name" name="bom_LName" required>
+    
+                <label for="bom_email"><b>Email</b></label>
+                <input type ="email" placeholder="Enter email" name="bom_email" required>
+
+                <label for="position"><b>Position</b></label>
+                <input type ="text" placeholder="Enter position" name="position" required>
+
+                <label for="uname"><b>Username</b></label>
+                <input type ="text" placeholder="Create username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Create Password" name="psw" required>
+
+                <button type="submit" >Submit</button>
+    
+            </div>
+          
+            <div class="container" style="background-color:#f1f1f1">
+              <button type="button" onclick="showAddBom(false)" class="cancelbtn">Cancel</button>
             </div>
         </div>
         </form>

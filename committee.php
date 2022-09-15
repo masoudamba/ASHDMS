@@ -1598,7 +1598,10 @@ button:hover {
                 </div>
                 </ul>
                 <ul class="menu" style="border-radius: 5px; padding:5px;">
+                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
+
                 <li><button type="button" onclick="showAddCase(false)"><b>Cases</b></button></li>
+                <li><a href ="index.php">Home</a><li>
                 <li><a href="login.php">Logout</a></li>
                 </ul>
                 
