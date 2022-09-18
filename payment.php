@@ -6,6 +6,8 @@ $dba = new DBA();
 $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 $access_token = '';
 
+
+
 if (isset($_POST['amount'])) {
     $consumer_secret = 'KEPgfS1AbNtQeRaL';
     $consumer_key = '9u589pJDEzppBPkYbKeYvvrtGGYPtb5F';
@@ -35,7 +37,6 @@ if (isset($_POST['amount'])) {
     $phone = htmlspecialchars(strip_tags($_POST["phone"]));
     $name = $_SESSION["name"];
     $id = $_SESSION['id'];
-
     $curl_post_data = array(
         'BusinessShortCode' => '174379',
         'Password' => $password,
@@ -45,7 +46,7 @@ if (isset($_POST['amount'])) {
         'PartyA' => $phone,
         'PartyB' => '174379',
         'PhoneNumber' => $phone,
-        'CallBackURL' => 'https://f12c-102-135-169-115.in.ngrok.io/ASHDMS/callback.php',
+        'CallBackURL' => 'https://3773-102-135-169-115.eu.ngrok.io/ASHDMS/callback.php',
         'AccountReference' => 'Parent'.$id . $timestamp,
         'TransactionDesc' => 'Parent payment - ' . date("F")
     );
@@ -59,10 +60,11 @@ if (isset($_POST['amount'])) {
     $curl_response = curl_exec($curl);
     
     $data = json_decode($curl_response, true);
-    $_SESSION['CheckoutID'] = json_decode($curl_response, true)['CheckoutRequestID'];
-    
+  
     $db = $dba->db;
     if ($data['ResponseCode'] == 0) {
+        $_SESSION['CheckoutID'] = json_decode($curl_response, true)['CheckoutRequestID'];
+
         $checkoutId = $data['CheckoutRequestID'];
         $parent_id = $_SESSION['id'];
         
@@ -70,12 +72,13 @@ if (isset($_POST['amount'])) {
             $stmt = $db->prepare("INSERT INTO payment(`parent_id`,`phone_number`, `query_id`, `amount`)
                 VALUES (:parent_id, :phonenumber, :checkoutId, :amount)");
             $stmt->execute([':parent_id'=>$parent_id, ':phonenumber'=>$phone, ':checkoutId'=>$checkoutId, ':amount'=>$amount]);
-            header("Location: parent.php?success=Payment accepted for processing. Check your phone and complete the transaction");
+            header('Location: parent.php?success=Payment accepted for processing. Check your phone and confirm the transaction');
         } catch (PDOException $e) {
             $error = $e->getMessage();
             header("Location: parent.php?error=Error occured during processing. Ensure all details are filled and retry");
         }
     }
+
 }
 
 ?>

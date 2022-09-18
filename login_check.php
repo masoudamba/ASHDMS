@@ -67,9 +67,8 @@ session_start();
                         }else if($row['role']==='Committee'){
                             header("Location: committee.php?details='$idd'");
                         }else{
-                            header("Location: parent.php?details='$idd'");
+                            header("Location: parent.php");
                         }
-
 
                     }
 
