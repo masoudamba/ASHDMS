@@ -5,8 +5,8 @@ if(isset($_POST['amount'])){
   date_default_timezone_set('Africa/Nairobi');
 
   # access token
-  $consumerKey = '9u589pJDEzppBPkYbKeYvvrtGGYPtb5F'; //Fill with your app Consumer Key
-  $consumerSecret = 'KEPgfS1AbNtQeRaL'; // Fill with your app Secret
+  $consumerKey = '9VEJNjdtYPKVilGAF15uuseGhfRqf8yU'; //Fill with your app Consumer Key
+  $consumerSecret = '4LZeQoGiGT0GEaAK'; // Fill with your app Secret
 
   # define the variales
   # provide the following details, this part is found on your test credentials on the developer account
@@ -42,7 +42,7 @@ if(isset($_POST['amount'])){
   $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
   # callback url
-  $CallBackURL = 'https://f12c-102-135-169-115.in.ngrok.io/ASHDMS/tinycallbackurl.php';  
+  $CallBackURL = 'https://a4f2-102-140-203-111.ap.ngrok.io/ASHDMS/tinycallbackurl.php';  
 
   $curl = curl_init($access_token_url);
   curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -52,6 +52,8 @@ if(isset($_POST['amount'])){
   $result = curl_exec($curl);
   $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
   $result = json_decode($result);
+  //var_dump($result->access_token);
+  //die();
   $access_token = $result->access_token;  
   curl_close($curl);
 
@@ -84,6 +86,7 @@ if(isset($_POST['amount'])){
   curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
   $curl_response = curl_exec($curl);
   //print results
-  echo $curl_response;
+  
+  var_dump($curl_response);
 };
 ?>

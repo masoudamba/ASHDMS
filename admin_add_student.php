@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-	include("config.php");
+	include("Mydb.php");
     include("function.php");
     
 if (isset($_POST['regNo']) && isset($_POST['student_FName'])

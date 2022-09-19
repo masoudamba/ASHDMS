@@ -1,6 +1,6 @@
 <?php
 
-include("config.php");
+include("Mydb.php");
 include("function.php");
 
 $roww = $_GET['details'];
@@ -19,7 +19,7 @@ $teacherID = $roww;
 
  $sql_bom = "SELECT * FROM bom";
 
- $sql_payment = "SELECT * FROM payment";
+ $sql_payment = "SELECT * FROM malipo";
 
  $sql_committee = "SELECT * FROM committee";
 
@@ -1658,14 +1658,12 @@ display:none;
                 try {
                     for (let index = 1; index < 4; index++) {
                         if(index===1){
-                            stateus = rowdata['phone_number'];
+                            stateus = rowdata['PhoneNumber'];
                         }else if(index===2){
-                            stateus = rowdata['mpesa_receipt'];
+                            stateus = rowdata['MpesaReceiptNumber'];
                         }else if(index===3){
                             stateus = rowdata['amount'];
-                        } else if(index===3){
-                            stateus = rowdata['status'];  
-                        }
+                        } 
                         row.cells.item(index).firstChild.value=stateus;
                     }
                 } catch (error) {
@@ -2251,7 +2249,7 @@ display:none;
                         <TD> phone</TD>
                         <TD> Mpesa_receipt</TD>
                         <TD>Amount</TD> 
-                        <TD>Status</TD> 
+                        
                         <TD>  </TD>
                     
                     </TR>  

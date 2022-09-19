@@ -2,7 +2,7 @@
 
 session_start();
 
-	include("config.php");
+	include("Mydb.php");
 	
 
 

@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-	include("config.php");
+	include("Mydb.php");
     include("function.php");
     
 if (isset($_POST['admin_id']) && isset($_POST['case_id']) && isset($_POST['teacher']) && isset($_POST['date'])
