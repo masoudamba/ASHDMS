@@ -261,7 +261,7 @@ button:hover {
     </section>
     <div id="id01"style="display:none;" class = "modal" >
        
-       <form class="modal-content animate"  action="" method="post" style="
+       <form class="modal-content animate"  action="contact.php" method="post" style="
             width: 400px;">
      
          <div class="imgcontainer"  >
@@ -283,7 +283,7 @@ button:hover {
     <label class="required" for="message">Your Message:</label><br />
     <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
       
-    <button type="submit" onclick="sendEmail()" >Send Message</button>
+    <button type="submit" name="submit" value="Submit"> Send Message</button>
          <div class="container" style="background-color:#f1f1f1">
          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
             </div>
@@ -379,22 +379,7 @@ button:hover {
       </div>
     </footer>
     <script>
-  function sendEmail(){
- Email.send({
-  Host : "gmx.gmail.com",
-  Username : "otienoamba81@gmail.com",
-  Password : "Oti.81,No.",
-  To : 'otienoamba81@gmail.com',
-  From : document.getElementById("email").value,
-  Subject : "New Message",
-  Body: "Name: " + document.getElementById("name").value
-      + <"br> Email: " + document.getElementById("email").value
-      + <"br> Subject: " + document.getElementById("subject").value
-      + <"br> Message: " + document.getElementById("message").value
- }).then(
-  message => alert("Thanks for contacting us!")
- );
-  }
+
         // Get the modal
         var modal = document.getElementById('id01');
         

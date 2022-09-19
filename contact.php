@@ -1,20 +1,24 @@
+
 <?php
-  $name=$_POST['name'];
-  $email=$_POST['email'];
-  $subject=$_POST['subject'];
-  $message=$_POST['message'];
+    if(isset($_POST['submit'])){
+        $name=$_POST['name'];
+        $subject=$_POST['subject'];
+        $email=$_POST['email'];
+        $message=$_POST['message'];
 
-  $email_from = 'otienoamba81@gmail.com';
-  
-  $email_body = "Name: $name.\n".
-                " Email: $email.\n".
-                
-                " Message: $message.\n";
+        $to='otienoamba81@gmail.com';
+        $subject='Agoro Sare High School Displine System';
+        $message="Name: ".$name."\n"."Subject: ".$subject."\n". "Message: "."\n\n".$message;
+        $headers="From: ".$email;
+        
+        if(mail($to, $subject, $message, $headers)){
+            echo "<h1>Sent Successfully! Thank you"." ".$name." ,We will contact you shortly!</h1>";
+        }
+        else{
+            echo "Something went wrong";
+        }
+       
 
-  $to = "otienoamba81@gmail.com";
-  $headers = "from : $email_from";
-  //$headers = "Reply To: $email \r\n";
-  mail( $to, $subject,$email_body.$headers );
-  //header("Location: index.php")
-
+        
+    }
 ?>

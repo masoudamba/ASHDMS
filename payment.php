@@ -6,8 +6,6 @@ $dba = new DBA();
 $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 $access_token = '';
 
-
-
 if (isset($_POST['amount'])) {
     $consumer_secret = 'KEPgfS1AbNtQeRaL';
     $consumer_key = '9u589pJDEzppBPkYbKeYvvrtGGYPtb5F';
