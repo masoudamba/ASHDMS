@@ -1053,7 +1053,7 @@ if (isset($_GET['success'])) {
 </head>
 
 <body>
-    
+
     <section class="main" style="background-image: url(images/slider2.jpg);">
 
         <nav>
@@ -1080,169 +1080,243 @@ if (isset($_GET['success'])) {
             </ul>
         </nav>
 
-        
 
-                <div class="cases">
-                    <?php
-                    $vExecute = $validExecute;
-                    if ($vExecute) {
-                        $valEcho;
-                        $errorId = $error;
-                        $index = 0;
-                        $val_profiles = json_encode($options_profiles);
-                        $valEcho = json_encode($options);
-                        try {
-                            echo "<br></br><br></br>";
-                            if ($valEcho) {
-                                echo "<script type='text/javascript'> window.onload = function(){
+
+        <div class="cases">
+            <?php
+            $vExecute = $validExecute;
+            if ($vExecute) {
+                $valEcho;
+                $errorId = $error;
+                $index = 0;
+                $val_profiles = json_encode($options_profiles);
+                $valEcho = json_encode($options);
+                try {
+                    echo "<br></br><br></br>";
+                    if ($valEcho) {
+                        echo "<script type='text/javascript'> window.onload = function(){
                         populateTableCases($valEcho,'$errorId',$val_profiles);
                     };  </script>";
-                            }
-                        } catch (Throwable $th) {
-                        }
                     }
-                    ?>
+                } catch (Throwable $th) {
+                }
+            }
+            ?>
+        </div>
+
+        <div id="form_new_case" style="display:none;" class="modal">
+            <form action="teacher_add_case.php" method="post" style="width: 400px;">
+                <div class="imgcontainer">
+                    <p style="font-size: 30px;">Report Case Here: </p>
                 </div>
 
-                <div id="form_new_case" style="display:none;" class="modal">
-                    <form action="teacher_add_case.php" method="post" style="width: 400px;">
-                        <div class="imgcontainer">
-                            <p style="font-size: 30px;">Report Case Here: </p>
-                        </div>
+                <div class="mb-3">
+                    <label for="teacher"><b>Teacher ID</b></label>
+                    <input type="text" placeholder="Teacher id" name="teacher" required>
 
-                        <div class="mb-3">
-                            <label for="teacher"><b>Teacher ID</b></label>
-                            <input type="text" placeholder="Teacher id" name="teacher" required>
+                    <label for="student"><b>Student Reg ID</b></label>
+                    <input type="text" placeholder="Enter student reg no." name="student" required>
 
-                            <label for="student"><b>Student Reg ID</b></label>
-                            <input type="text" placeholder="Enter student reg no." name="student" required>
+                    <label for="infraction"><b>Infraction</b></label>
+                    <input type="text" placeholder="theft" name="infraction" required>
 
-                            <label for="infraction"><b>Infraction</b></label>
-                            <input type="text" placeholder="theft" name="infraction" required>
+                    <label for="penalty"><b>Penalty</b></label>
+                    <input type="text" placeholder="penalty" name="penalty" required>
 
-                            <label for="penalty"><b>Penalty</b></label>
-                            <input type="text" placeholder="penalty" name="penalty" required>
+                    <label for="action"><b>Action</b></label>
+                    <input type="action" placeholder="verbal warning" name="action" required>
 
-                            <label for="action"><b>Action</b></label>
-                            <input type="action" placeholder="verbal warning" name="action" required>
+                    <button type="submit">Submit</button>
 
-                            <button type="submit">Submit</button>
-
-                        </div>
-
-                        <div class="container" style="background-color:#f1f1f1">
-                            <button type="button" onclick="showAddCase(false)" class="cancelbtn">Cancel</button>
-                        </div>
-
-                    </form>
                 </div>
 
-                <div id="id01" style="display:none;" class="modal">
-                    <form class="modal-content animate" action="" method="post" style="width: 400px;">
-                        <div class="imgcontainer">
-                            <h2><span>Get In Touch</span> With Us</h2>
-                        </div>
-
-                        <div class="container">
-                            <label for="name"><b>Full Name</b></label>
-                            <input type="text" placeholder="Your Name" name="name" required>
-
-                            <label for="email"><b>Email</b></label>
-                            <input type="email" placeholder="name@gmail.com" name="email">
-
-                            <label for="subject"><b>Subject</b></label>
-                            <input type="subject" placeholder="Your Subject" name="subject">
-                            <label class="required" for="message">Your Message:</label><br />
-                            <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
-
-                            <button type="submit" onclick="sendEmail()">Send Message</button>
-                            <div class="container" style="background-color:#f1f1f1">
-                                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                            </div>
-                        </div>
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="showAddCase(false)" class="cancelbtn">Cancel</button>
                 </div>
-                </form>
-            </div>
 
-            <div id="form_new_payment" style="display:none;" class="modal">
-                <form action="payment.php" method="post" style="width: 400px;" id="paymentForm">
-                    <div class="imgcontainer">
+            </form>
+        </div>
 
-                        <p style="font-size: 30px;">Make Payment Here: </p>
+        <div id="id01" style="display:none;" class="modal">
+            <form class="modal-content animate" action="" method="post" style="width: 400px;">
+                <div class="imgcontainer">
+                    <h2><span>Get In Touch</span> With Us</h2>
+                </div>
 
-                    </div>
+                <div class="container">
+                    <label for="name"><b>Full Name</b></label>
+                    <input type="text" placeholder="Your Name" name="name" required>
 
-                    <div class="container">
+                    <label for="email"><b>Email</b></label>
+                    <input type="email" placeholder="name@gmail.com" name="email">
 
-                        <label for="amount"><b>Amount</b></label>
-                        <input type="number" placeholder="amount" name="amount" required>
+                    <label for="subject"><b>Subject</b></label>
+                    <input type="subject" placeholder="Your Subject" name="subject">
+                    <label class="required" for="message">Your Message:</label><br />
+                    <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
 
-                        <label for="phone"><b>Phone Number</b></label>
-                        <input type="number" placeholder="254759053976" name="phone" required>
-
-                        <button type="submit">Submit</button>
-
-                    </div>
-
+                    <button type="submit" onclick="sendEmail()">Send Message</button>
                     <div class="container" style="background-color:#f1f1f1">
-                        <button type="button" onclick="showPaymentForm(false)" class="cancelbtn">Cancel</button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
                     </div>
+                </div>
+        </div>
+        </form>
+        </div>
 
-                </form>
-            </div>
+        <div id="form_new_payment" style="display:none;" class="modal">
+            <form action="#" method="post" style="width: 400px;" id="paymentForm">
+                <div class="imgcontainer">
+                    <p style="font-size: 30px;">Make Payment Here: </p>
+                </div>
+                <div class="feedback"></div>
+
+                <div class="container">
+
+                    <label for="amount"><b>Amount</b></label>
+                    <input type="number" placeholder="amount" name="amount" id="amount" required>
+
+                    <label for="phone"><b>Phone Number</b></label>
+                    <input type="number" placeholder="254759053976" name="phone" id="phone" required>
+
+                    <button type="submit" id="submitPayment">Submit</button>
+
+                </div>
+
+                <div class="completeContainer">
+                </div>
+
+            </form>
+        </div>
 
 
-            <div id="the_cases" style="display:none;" class="the_cases">
-                <INPUT hidden id="caseLoad" type="button" value="Load All Cases" onclick="" />
-                <INPUT hidden type="button" value="Add Case" onclick="addRow('dataTable')" />
-                <TABLE id="dataTable" width="100%" bgcolor="white" border="1" bordercolor="black">
-                    <TR>
-                        <TD>No.</TD>
-                        <TD>Case Id</TD>
-                        <TD>Teacher Name</TD>
-                        <TD>Teacher Tel.</TD>
-                        <TD>Action Taken</TD>
-                        <TD>Status</TD>
-                        <TD>Verdict</TD>
-                        <TD>Link</TD>
-                        <TD>Date</TD>
-                        <TD> </TD>
-                    </TR>
+        <div id="the_cases" style="display:none;" class="the_cases">
+            <INPUT hidden id="caseLoad" type="button" value="Load All Cases" onclick="" />
+            <INPUT hidden type="button" value="Add Case" onclick="addRow('dataTable')" />
+            <TABLE id="dataTable" width="100%" bgcolor="white" border="1" bordercolor="black">
+                <TR>
+                    <TD>No.</TD>
+                    <TD>Case Id</TD>
+                    <TD>Teacher Name</TD>
+                    <TD>Teacher Tel.</TD>
+                    <TD>Action Taken</TD>
+                    <TD>Status</TD>
+                    <TD>Verdict</TD>
+                    <TD>Link</TD>
+                    <TD>Date</TD>
+                    <TD> </TD>
+                </TR>
 
-                </TABLE>
-            </div>
+            </TABLE>
+        </div>
 
-            <div id="student_div" style="display:none;" class="student_profiles">
+        <div id="student_div" style="display:none;" class="student_profiles">
 
-                <TABLE id="student_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
-                    <TR>
-                        <TD>No.</TD>
-                        <TD>Student Reg Id</TD>
-                        <TD>Student Name</TD>
-                        <TD>Form</TD>
-                        <TD>Case Id</TD>
-                        <TD>Parent Name</TD>
-                        <TD>Infraction</TD>
-                        <TD>Status</TD>
+            <TABLE id="student_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
+                <TR>
+                    <TD>No.</TD>
+                    <TD>Student Reg Id</TD>
+                    <TD>Student Name</TD>
+                    <TD>Form</TD>
+                    <TD>Case Id</TD>
+                    <TD>Parent Name</TD>
+                    <TD>Infraction</TD>
+                    <TD>Status</TD>
 
-                    </TR>
+                </TR>
 
-                </TABLE>
-            </div>
+            </TABLE>
+        </div>
 
-            <div class="home-img" style="width: 500px; display: none;">
+        <div class="home-img" style="width: 500px; display: none;">
 
-                <marquee width="90%" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-                    <a href="#" style="color: white;">There is no magic wand that can resolve our problems
-                        the solution rest with our work and discipline</a>
-                </marquee>
-                <marquee width="100%" direction="right" onmouseover="this.stop();" onmouseout="this.start();">
-                    <a href="#" style="color: white;">Success is measured by your discipline and inner peace.</a>
-                </marquee>
-            </div>
+            <marquee width="90%" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                <a href="#" style="color: white;">There is no magic wand that can resolve our problems
+                    the solution rest with our work and discipline</a>
+            </marquee>
+            <marquee width="100%" direction="right" onmouseover="this.stop();" onmouseout="this.start();">
+                <a href="#" style="color: white;">Success is measured by your discipline and inner peace.</a>
+            </marquee>
+        </div>
 </body>
 <script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+    (function() {
+        // console.log($('#completePayment'));
+        $('#submitPayment').on('click', function(event) {
+            event.preventDefault();
+            var amount = $("input[name='amount']").val();
+            var phone = $("input[name='phone']").val(),
+                errors = [];
+            if (amount == null || amount == '') {
+                errors.push("Amount is required");
+            }
+            if (phone == null || phone == '') {
+                errors.push("Phone number is required");
+            }
+            if (amount == null || amount == '') {
+                errors.push("Amount is required");
+            }
+            if (errors.length > 0) {
+                var p = "";
+                $.each(errors, (key, value) => {
+                    p += value;
+                });
+                $(".feedback").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Oops!  </strong>" + p + "</div>");
+            } else {
+                var data = {
+                    phone: phone,
+                    amount: amount,
+                    makepayment: true
+                }
+                $.ajax({
+                    method: 'POST',
+                    url: 'backend/payment.php',
+                    data: data,
+                    success: (params) => {
+                        var arr = params.split(":");
+                        if (arr[0] == "success") {
+                            console.log(arr[1]);
+                            $(".feedback").html("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Success!  </strong>Payment Accepted for processing! Check your phone, enter Mpesa Pin to complete the transaction. </div>");
+                            $('.completeContainer').html("<button  class=\"btn btn-primary btn-md\" id=\"completePayment\" data-val=" + arr[1] + ">Complete</button>");
+                        } else {
+                            $(".feedback").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Oops!  </strong>Error occured during processing. Ensure you have enough money in your mpesa and retry. </div>");
+                        }
+                    },
+                    error: (error) => {
+                        $(".feedback").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Oops!  </strong>Error occured during processing. Ensure you have enough money in your mpesa and retry. </div>");
+                    }
+                }).then(function() {
+                    $('#completePayment').on('click', function(event) {
+                        event.preventDefault();
+                        var checkoutid = $(this).data('val');
+                        var data = {
+                            checkoutid: checkoutid,
+                            confirmPayment: true,
+                        }
+                        $.ajax({
+                            method: 'POST',
+                            data: data,
+                            url: 'backend/confirm.php',
+                            success: function(params) {
+                                console.log(params);
+                                if (params == "success") {
+                                    $(".feedback").html("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Success!  </strong>Payment was received successfully. </div>");
+                                } else {
+                                    $(".feedback").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Oops!  </strong>We have not received any payments from you. </div>");
+                                }
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+
+                    });
+                });
+            }
+        });
+
+
+    })()
 </script>
 
 </html>

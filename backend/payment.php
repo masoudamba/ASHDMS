@@ -1,12 +1,14 @@
 <?php
 session_start();
-require 'backend/db.php';
+require 'db.php';
 $dba = new DBA();
 
 $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 $access_token = '';
 
-if (isset($_POST['amount'])) {
+
+
+if (isset($_POST['makepayment'])) {
     $consumer_secret = 'KEPgfS1AbNtQeRaL';
     $consumer_key = '9u589pJDEzppBPkYbKeYvvrtGGYPtb5F';
     $encodestring = base64_encode($consumer_key . ":" . $consumer_secret);
@@ -44,7 +46,7 @@ if (isset($_POST['amount'])) {
         'PartyA' => $phone,
         'PartyB' => '174379',
         'PhoneNumber' => $phone,
-        'CallBackURL' => 'https://3773-102-135-169-115.eu.ngrok.io/ASHDMS/callback.php',
+        'CallBackURL' => 'https://ba2c-102-135-169-115.in.ngrok.io/ASHDMS/backend/callback.php',
         'AccountReference' => 'Parent'.$id . $timestamp,
         'TransactionDesc' => 'Parent payment - ' . date("F")
     );
@@ -70,7 +72,7 @@ if (isset($_POST['amount'])) {
             $stmt = $db->prepare("INSERT INTO payment(`parent_id`,`phone_number`, `query_id`, `amount`)
                 VALUES (:parent_id, :phonenumber, :checkoutId, :amount)");
             $stmt->execute([':parent_id'=>$parent_id, ':phonenumber'=>$phone, ':checkoutId'=>$checkoutId, ':amount'=>$amount]);
-            header('Location: parent.php?success=Payment accepted for processing. Check your phone and confirm the transaction');
+            echo "success:".$checkoutId;
         } catch (PDOException $e) {
             $error = $e->getMessage();
             header("Location: parent.php?error=Error occured during processing. Ensure all details are filled and retry");

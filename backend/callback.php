@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require 'backend/db.php';
+require 'db.php';
 
 date_default_timezone_set("Africa/Nairobi");
 header("Access-Control-Allow-Origin: *");
@@ -43,7 +43,7 @@ function confirmPayment($MpesaReceiptNumber = null, $checkOutId = null)
 
 // function wh_log($log_msg)
 // {
-//     $log_filename = "log";
+//     $log_filename = "../log";
 //     if (!file_exists($log_filename)) {
 //         // create directory/folder uploads.
 //         mkdir($log_filename, 0777, true);
