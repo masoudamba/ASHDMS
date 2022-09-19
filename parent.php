@@ -5,25 +5,7 @@ include("function.php");
 
 session_start();
 
-<<<<<<< HEAD
-$roww = 1;
-try {
-    $roww = $_GET['details'];
-} catch (\Throwable $th) {
-    $roww = $_SESSION['ParentID'];   
-}
-
-$error = "No Error";
-
-$_SESSION['ParentID'] = $roww;
-||||||| a7c9d12
-$roww = $_GET['details'];
-$error = "No Error";
-
-$_SESSION['ParentID'] = $roww;
-=======
 $_SESSION['ParentID'] = $_SESSION['id'];
->>>>>>> 473a1334c38ad7fe630a9b71faacd2b646e87bc8
 
 //$row_decoded = json_decode($roww);
 
@@ -1083,26 +1065,6 @@ if (isset($_GET['success'])) {
                 <span class="nav-icon"></span>
             </label>
             <ul class="menu" style="border-radius: 5px;">
-<<<<<<< HEAD
-                <li><button type="button" onclick="showStudentProfiles(true)">Student Profile</button><li>
-                <li><button type="button" onclick="showAddCase(false)">Cases</button><li>
-                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
-                <li><button type="button" onclick="showPaymentForm(true)">payment</button><li>
-                <li><button type="button" onclick="document.getElementById('id01').style.display='block'"
-                style="">Contact Us</li>
-                <li><a href ="index.php">Home</a><li>
-                <li><a href ="login.php">logout</a><li>
-                
-||||||| a7c9d12
-                <li><button type="button" onclick="showStudentProfiles(true)">Student Profile</button><li>
-                <li><button type="button" onclick="showAddCase(false)">Cases</button><li>
-                <li><button type="button" onclick="window.open('http://localhost/ASHDMS/Documents/ASH Rules and Regulations.pdf','_blank')">School Rules</button><li>
-                <li><button type="button" onclick="showPaymentForm(true)">payment</button><li>
-                <li><button type="button" onclick="document.getElementById('id01').style.display='block'"
-                style="">Contact Us</li>
-                <li><a href ="login.php">logout</a><li>
-                
-=======
                 <li><button type="button" onclick="showStudentProfiles(true)">Student Profile</button>
                 <li>
                 <li><button type="button" onclick="showAddCase(false)">Cases</button>
@@ -1115,7 +1077,6 @@ if (isset($_GET['success'])) {
                 <li><a href="login.php">logout</a>
                 <li>
 
->>>>>>> 473a1334c38ad7fe630a9b71faacd2b646e87bc8
             </ul>
         </nav>
 
@@ -1196,81 +1157,16 @@ if (isset($_GET['success'])) {
 
                     <button type="submit" onclick="sendEmail()">Send Message</button>
                     <div class="container" style="background-color:#f1f1f1">
-                        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='none'" 
+                        class="cancelbtn">Cancel</button>
                     </div>
                 </div>
         </div>
-<<<<<<< HEAD
-     
-         </div>
-         
-       </form>
-     </div>
-     <!-- contact us modal end  -->
-
-        <div id="form_new_payment" style="display:none;" class = "modal">
-        <form  class ="modal-content animate"action="pay.php" method="post"style="width: 400px;">
-              <div class="imgcontainer">
-                
-                <p style="font-size: 30px;">Make Payment Here: </p>
-            
-              </div>
-            
-            <div class="container">
-
-                <label for="amount"><b>Amount</b></label>
-                <input type ="number" placeholder="amount" name="amount" required>
-
-                <label for="phone"><b>Phone Number</b></label>
-                <input type="number" placeholder="254759053976" name="phone" required>
-          
-                <button type="submit" >Submit</button>
-           
-            </div>
-          
-            <div class="container" style="background-color:#f1f1f1">
-              <button type="button" onclick="showPaymentForm(false)" class="cancelbtn">Cancel</button>
-            </div>
-  
-||||||| a7c9d12
-     
-         </div>
-         
-       </form>
-     </div>
-     <!-- contact us modal end  -->
-
-        <div id="form_new_payment" style="display:none;" class = "modal">
-        <form  action="payment.php" method="post"style="width: 400px;">
-              <div class="imgcontainer">
-                
-                <p style="font-size: 30px;">Make Payment Here: </p>
-            
-              </div>
-            
-            <div class="container">
-
-                <label for="amount"><b>Amount</b></label>
-                <input type ="number" placeholder="amount" name="amount" required>
-
-                <label for="phone"><b>Phone Number</b></label>
-                <input type="number" placeholder="254759053976" name="phone" required>
-          
-                <button type="submit" >Submit</button>
-           
-            </div>
-          
-            <div class="container" style="background-color:#f1f1f1">
-              <button type="button" onclick="showPaymentForm(false)" class="cancelbtn">Cancel</button>
-            </div>
-  
-=======
->>>>>>> 473a1334c38ad7fe630a9b71faacd2b646e87bc8
         </form>
         </div>
 
         <div id="form_new_payment" style="display:none;" class="modal">
-            <form action="#" method="post" style="width: 400px;" id="paymentForm">
+            <form  class="modal-content animate"action="#" method="post" style="width: 400px;" id="paymentForm">
                 <div class="imgcontainer">
                     <p style="font-size: 30px;">Make Payment Here: </p>
                 </div>
@@ -1285,6 +1181,9 @@ if (isset($_GET['success'])) {
                     <input type="number" placeholder="254759053976" name="phone" id="phone" required>
 
                     <button type="submit" id="submitPayment">Submit</button>
+                    <a href = ""><button type="button" onclick="document.getElementById('id01').style.display='none'" 
+                class="cancelbtn">Cancel</button></a>
+                </div>
 
                 </div>
 

@@ -9,8 +9,8 @@ $access_token = '';
 
 
 if (isset($_POST['makepayment'])) {
-    $consumer_secret = 'KEPgfS1AbNtQeRaL';
-    $consumer_key = '9u589pJDEzppBPkYbKeYvvrtGGYPtb5F';
+    $consumer_secret = '4LZeQoGiGT0GEaAK';
+    $consumer_key = '9VEJNjdtYPKVilGAF15uuseGhfRqf8yU';
     $encodestring = base64_encode($consumer_key . ":" . $consumer_secret);
     $OuathString = 'Basic ' . $encodestring;
 
@@ -46,13 +46,7 @@ if (isset($_POST['makepayment'])) {
         'PartyA' => $phone,
         'PartyB' => '174379',
         'PhoneNumber' => $phone,
-<<<<<<< HEAD:payment.php
-        'CallBackURL' => 'https://b764-102-140-203-111.ap.ngrok.io /ASHDMS/callback.php',
-||||||| a7c9d12:payment.php
-        'CallBackURL' => 'https://f12c-102-135-169-115.in.ngrok.io/ASHDMS/callback.php',
-=======
-        'CallBackURL' => 'https://ba2c-102-135-169-115.in.ngrok.io/ASHDMS/backend/callback.php',
->>>>>>> 473a1334c38ad7fe630a9b71faacd2b646e87bc8:backend/payment.php
+        'CallBackURL' => 'https://a4f2-102-140-203-111.ap.ngrok.io/ASHDMS/backend/callback.php',
         'AccountReference' => 'Parent'.$id . $timestamp,
         'TransactionDesc' => 'Parent payment - ' . date("F")
     );
@@ -78,13 +72,7 @@ if (isset($_POST['makepayment'])) {
             $stmt = $db->prepare("INSERT INTO payment(`parent_id`,`phone_number`, `query_id`, `amount`)
                 VALUES (:parent_id, :phonenumber, :checkoutId, :amount)");
             $stmt->execute([':parent_id'=>$parent_id, ':phonenumber'=>$phone, ':checkoutId'=>$checkoutId, ':amount'=>$amount]);
-<<<<<<< HEAD:payment.php
-            header("Location: parent.php?success=Payment accepted for processing. Check your phone and complete the transaction&details='$parent_id'");
-||||||| a7c9d12:payment.php
-            header("Location: parent.php?success=Payment accepted for processing. Check your phone and complete the transaction");
-=======
             echo "success:".$checkoutId;
->>>>>>> 473a1334c38ad7fe630a9b71faacd2b646e87bc8:backend/payment.php
         } catch (PDOException $e) {
             $error = $e->getMessage();
             //header("Location: parent.php?error=Error occured during processing. Ensure all details are filled and retry&details='$parent_id'");
