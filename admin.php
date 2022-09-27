@@ -681,42 +681,7 @@ display:none;
         if('student_profiles'===tableID){
 
             //Column 6  
-            /*
-            var cell3 = row.insertCell(5);  
-            //var element3 = document.createElement("input");  
-            //element3.type = "text";
-            element3.setAttribute('disabled',true);   
-            cell3.appendChild(element3);
-
-            //Column 7 
-            var cell3 = row.insertCell(6);  
-            var element3 = document.createElement("input");  
-            element3.type = "text";
-            element3.setAttribute('disabled',true);   
-            cell3.appendChild(element3);
-
-
-            //Column 8 
-            var cell3 = row.insertCell(7);  
-            var element3 = document.createElement("select");
-
-            var option1 = document.createElement("option");
-            var option2 = document.createElement("option");
-            var option3 = document.createElement("option");
-            option1.value = "Pending";
-            option2.value = "Completed";
-            option3.value = "Active";
-
-            option1.label = "Pending";
-            option2.label = "Completed";
-            option3.label = "Active";
-
-            element3.class = "form-select";
-            element3.appendChild(option1); 
-            element3.appendChild(option2);
-            element3.appendChild(option3);
-            element3.setAttribute('disabled',true);
-            cell3.appendChild(element3);*/
+           
 
             //Column 5  
             var cell1 = row.insertCell(4);  
@@ -724,7 +689,7 @@ display:none;
             element1.type = "button";  
             var btnName = "button" + (rowCount + 1);  
             element1.name = btnName;  
-            element1.setAttribute('value', 'Student Details'); // or element1.value = "button";  
+            //element1.setAttribute('value', 'Student Details'); // or element1.value = "button";  
             element1.onclick = function () { editStudent(btnName); }  
             //element1.setAttribute('disabled',false);
             cell1.appendChild(element1);

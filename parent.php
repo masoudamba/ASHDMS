@@ -7,13 +7,11 @@ session_start();
 
 $_SESSION['ParentID'] = $_SESSION['id'];
 
-//$row_decoded = json_decode($roww);
 
-//$parentID = $row_decoded['id'];
 $parentID = $_SESSION['id'];
 
 $sql_cases = "SELECT * FROM cases WHERE parent_id = $parentID";
-//$sql_john = "SELECT * FROM persons WHERE forename = 'john'";
+
 
 $qry1 = mysqli_query($con, $sql_cases);
 $qryProfile = mysqli_query($con, $sql_cases);
@@ -736,13 +734,13 @@ if (isset($_GET['success'])) {
 
             } catch (error) {
                 //
-                alert(error);
+               // alert(error);
             }
 
             try {
 
                 if (errorFromDB !== "No Error") {
-                    alert(errorFromDB)
+                    console.log(errorFromDB);
                 }
 
             } catch (error) {
@@ -835,13 +833,13 @@ if (isset($_GET['success'])) {
 
             } catch (e) {
                 //
-                alert(e);
+                //alert(e);
             }
 
             try {
 
                 if (errorFromDB !== "No Error") {
-                    alert(errorFromDB)
+                    console.log(errorFromDB);
                 }
 
             } catch (error) {
@@ -866,7 +864,7 @@ if (isset($_GET['success'])) {
 
 
             } catch (e) {
-                alert(e);
+               // alert(e);
             }
         }
 
@@ -886,7 +884,7 @@ if (isset($_GET['success'])) {
                     h.style.display = "block";
                 }
             } catch (error) {
-                alert(error);
+                //alert(error);
             }
 
 
@@ -1029,7 +1027,7 @@ if (isset($_GET['success'])) {
 
             } catch (e) {
                 //
-                alert(e);
+               // alert(e);
             }
 
             try {

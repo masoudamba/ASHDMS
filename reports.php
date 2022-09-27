@@ -1,3 +1,137 @@
+<?php
+
+include("Mydb.php");
+include("function.php");
+
+$User = "Admin";
+$Stud ="stud";
+$Active ="active";
+$court_date = array();
+$Most = "most";
+$Comp ="complete";
+$Pend = "pending";
+$Esca = "escalated";
+$Mostcom = "common";
+
+$sql_cases = "SELECT * FROM cases";
+$sql_active = "SELECT * FROM cases WHERE status ='Active'";
+$sql_complete = "SELECT * FROM cases WHERE status ='Complete'";
+
+$sql_pending = "SELECT * FROM cases WHERE status ='Pending'";
+$sql_escalated = "SELECT * FROM cases WHERE status ='Escalated'";
+
+$sql_students = "SELECT * FROM students";
+$MostReported = "SELECT parent_id, COUNT(*) FROM cases GROUP BY parent_id";
+
+$MostCommon= "SELECT infraction, COUNT(*) FROM cases GROUP BY infraction ORDER BY COUNT(*) DESC";
+//all cases
+try {
+
+  $qryPayment = mysqli_query($con, $sql_cases); 
+  $User = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
+//most common case
+try {
+
+  $qryPayment = mysqli_query($con, $MostCommon); 
+ 
+  $Mostcom= (mysqli_fetch_assoc($qryPayment))['infraction'];
+
+  $Common ="SELECT * FROM cases WHERE infaction =$Mostcom";
+  $qryPayment = mysqli_query($con, $Common); 
+  $MostC = (mysqli_fetch_assoc($qryPayment));
+  $Mostcom = $MostC['infraction'];
+
+} catch (\Throwable $th) {
+  //throw $th;
+}
+//most reported student
+try {
+
+  $qryPayment = mysqli_query($con, $MostReported); 
+ 
+  $Most = (mysqli_fetch_assoc($qryPayment))['parent_id'][0];
+
+  $StudName ="SELECT * FROM parents WHERE id =$Most";
+  $qryPayment = mysqli_query($con, $StudName); 
+  $MostS = (mysqli_fetch_assoc($qryPayment));
+  $Most = $MostS['student_reg_no'];
+
+  $StudName ="SELECT first_name, last_name FROM students WHERE regNo=$Most";
+  $qryPayment = mysqli_query($con, $StudName); 
+  $MostS = (mysqli_fetch_assoc($qryPayment));
+  $Most = $MostS['first_name']. ' ' .$MostS['last_name'];
+} catch (\Throwable $th) {
+  //throw $th;
+}
+//active cases
+try {
+
+  $qryPayment = mysqli_query($con, $sql_active); 
+  $Active = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
+//Pending cases
+try {
+
+  $qryPayment = mysqli_query($con, $sql_pending); 
+  $Pend = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
+//Completed cases
+try {
+
+  $qryPayment = mysqli_query($con, $sql_complete); 
+  $Comp = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
+//Escalated cases
+try {
+
+  $qryPayment = mysqli_query($con, $sql_escalated); 
+  $Esca = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+//total students
+try {
+  
+  $qryPayment = mysqli_query($con, $sql_students); 
+  $Stud = mysqli_num_rows($qryPayment);
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
+$court_date = array(
+  "reported_cases"=>$User,
+  "total_cases"=>$User,
+  "pending_cases"=>$Pend,
+  "completed_cases"=>$Comp,
+  "numbers_reported"=>$Stud,
+  "details"=>'infraction_item',
+  "common_cases"=>$Mostcom,
+  "escalated_cases"=>$Esca,
+  "most"=>$Most,
+  "active_cases"=>$Active,
+  "total_students"=>$Stud
+  
+
+);
+
+
+
+
+?>
+
 
 <!doctype html>
 <html>
@@ -16,7 +150,7 @@
   
   <style>
 
-.header{
+   .header{
   display: fex;
   justify-content: space-between;
   align-items: center;
@@ -280,7 +414,7 @@ button{
   justify-content: space-between;
   align-items: center;
   background: #fff;
-  color: #cfb53b;
+  color:#B4ADAC;
   padding: 10px;
   width: 100%;
   position: sticky;
@@ -388,52 +522,53 @@ button{
     <div class="container">
       <div class="border shadow-lg p-3 w-75 mx-auto">
         <div class="headers" style=" border-bottom:solid 2px red;">
-          <h1>Committee meeting Details</h1>
+          <h1>Student and Cases Reports</h1>
           <div>
             <a href="admin.php" class="secondary">Back</a>
           </div>
         </div>
 
-        <h2>Case Details</h2>
+        <h2>Cases Report</h2>
         <div class="details">
           <div>
             <div>
-              <p>Case Reference No: <span><?php echo $court_date['reference_no'] ?></span></p>
+              <p>Reported Cases: <span><?php echo $court_date['reported_cases'] ?></span></p>
             </div>
             <div>
-              <p>Case Type: <span><?php echo ucwords(implode(' ', explode('_', $court_date['case_type']))) ?></span></p>
+              <p>Total Cases: <span><?php echo $court_date['total_cases'] ?></span></p>
             </div>
             <div>
-              <p>Court Date: <span><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></span></p>
-            </div>
-          </div>
-          <div>
-            <div>
-              <p>Defendant Name: <span><?php echo $court_date['defendant_name'] ?></span></p>
-            </div>
-            <div>
-              <p>Defendant ID No: <span><?php echo $court_date['defendant_national_id'] ?></span></p>
+              <p>Pending Cases <span><?php echo $court_date['pending_cases'] ?></span></p>
             </div>
           </div>
           <div>
             <div>
-              <p>Accused Name: <span><?php echo $court_date['accused_name'] ?></span></p>
+              <p>Active Cases: <span><?php echo $court_date['active_cases'] ?></span></p>
             </div>
             <div>
-              <p>Accused ID No: <span><?php echo $court_date['accused_national_id'] ?></span></p>
+              <p>Completed Cases: <span><?php echo $court_date['completed_cases'] ?></span></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <p>Escalated Cases:: <span><?php echo $court_date['escalated_cases'] ?></span></p>
+            </div>
+            <div>
+              <p>Common Cases:: <span><?php echo $court_date['common_cases'] ?></span></p>
             </div>
           </div>
         </div>
-        <h2>Court Details</h2>
+        <h2>Students Report</h2>
         <div class="details">
           <div>
-            <p>Court House: <span><?php echo $court_date['name'] ?></span></p>
+            <p>Total Students: <span><?php echo $court_date['total_students'] ?></span></p>
           </div>
           <div>
-            <p>Room Number: <span><?php echo $court_date['room_number'] ?></span></p>
+            <p>Numbers Reported: <span><?php echo $court_date['numbers_reported'] ?></span></p>
           </div>
+         
           <div>
-            <p>Judge: <span><?php echo 'Hon. Justice ' . $court_date['first_name'] . ' ' . $court_date['last_name']  ?></span></p>
+            <p>Most Reported: <span><?php echo 'Mr ' . $court_date['most']?></span></p>
           </div>
         </div>
         <button class="print-btn" onclick="window.print()">

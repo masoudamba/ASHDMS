@@ -937,7 +937,7 @@ img.avatar {
                      <option value="Assault on school officials">Assault on school officials</option>
                      <option value="Mass protest">Mass protest</option>
                      <option value="Cultism">Cultism</option>
-                     <option value="Vanadalism">Vanadalism</option>
+                     <option value="Vanadalism">Vandalism</option>
                      <option value="Examination mulpractise">Examination mulpractise</option>
                      <option value="Fighting">Fighting</option>
                      <option value="Drug abuse">Drug abuse</option>
