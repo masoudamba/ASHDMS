@@ -1136,7 +1136,7 @@ if (isset($_GET['success'])) {
         </div>
 
         <div id="id01" style="display:none;" class="modal">
-            <form class="modal-content animate" action="" method="post" style="width: 400px;">
+            <form class="modal-content animate" action="contact.php" method="post" style="width: 400px;">
                 <div class="imgcontainer">
                     <h2><span>Get In Touch</span> With Us</h2>
                 </div>
@@ -1153,7 +1153,7 @@ if (isset($_GET['success'])) {
                     <label class="required" for="message">Your Message:</label><br />
                     <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
 
-                    <button type="submit" onclick="sendEmail()">Send Message</button>
+                    <button type="submit">Send Message</button>
                     <div class="container" style="background-color:#f1f1f1">
                         <button type="button" onclick="document.getElementById('id01').style.display='none'" 
                         class="cancelbtn">Cancel</button>

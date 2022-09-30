@@ -46,7 +46,7 @@ if (isset($_POST['makepayment'])) {
         'PartyA' => $phone,
         'PartyB' => '174379',
         'PhoneNumber' => $phone,
-        'CallBackURL' => 'https://a4f2-102-140-203-111.ap.ngrok.io/ASHDMS/backend/callback.php',
+        'CallBackURL' => 'https://440c-102-140-203-111.ap.ngrok.io/ASHDMS/backend/callback.php',
         'AccountReference' => 'Parent'.$id . $timestamp,
         'TransactionDesc' => 'Parent payment - ' . date("F")
     );

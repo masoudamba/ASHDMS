@@ -19,7 +19,7 @@ $teacherID = $roww;
 
  $sql_bom = "SELECT * FROM bom";
 
- $sql_payment = "SELECT * FROM malipo";
+ $sql_payment = "SELECT * FROM payment";
 
  $sql_committee = "SELECT * FROM committee";
 
@@ -1621,13 +1621,15 @@ display:none;
               
                 stateus = "null";
                 try {
-                    for (let index = 1; index < 4; index++) {
+                    for (let index = 1; index <= 4; index++) {
                         if(index===1){
-                            stateus = rowdata['PhoneNumber'];
+                            stateus = rowdata['phone_number'];
                         }else if(index===2){
-                            stateus = rowdata['MpesaReceiptNumber'];
+                            stateus = rowdata['mpesa_receipt'];
                         }else if(index===3){
                             stateus = rowdata['amount'];
+                        }else if(index===4){
+                            stateus = rowdata['status'];
                         } 
                         row.cells.item(index).firstChild.value=stateus;
                     }
@@ -2211,10 +2213,10 @@ display:none;
                 <TABLE id="payment_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
                     <TR>
                         <TD>No.</TD>
-                        <TD> phone</TD>
+                        <TD> Phone</TD>
                         <TD> Mpesa_receipt</TD>
                         <TD>Amount</TD> 
-                        
+                        <TD>Status</TD> 
                         <TD>  </TD>
                     
                     </TR>  
