@@ -2,7 +2,6 @@
 session_start();
 
 	include("Mydb.php");
-    include("function.php");
     
 if (isset($_POST['admin_id']) && isset($_POST['case_id']) && isset($_POST['teacher']) && isset($_POST['date'])
 && isset($_POST['parent']) && isset($_POST['infraction']) && isset($_POST['penalty']) 
@@ -32,45 +31,57 @@ $link = $_POST['link'];
 $action = validate($_POST['action']);
 
 
-$user_data = 'details='. $admin_id;
+$user_data = '';
+$_SESSION['details'] = $teacher;
+$_SESSION['data'] = 'refresh';
 if (empty($admin_id)) {
-    header("Location: admin.php?error=Admin ID is required&$user_data");
+    $_SESSION['error'] = "Admin ID is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($action)){
-    header("Location: admin.php?error=action is required&$user_data");
+    $_SESSION['error'] = "Action is required";
+    header("Location: admin.php");
     exit();
 }else if(empty($verdict)){
-    header("Location: admin.php?error=verdict is required&$user_data");
+    $_SESSION['error'] = "verdict is required";
+    header("Location: admin.php");
     exit();
 }
 
 else if(empty($link)){
-    header("Location: admin.php?error=link is required&$user_data");
+    $_SESSION['error'] = "link is required";
+    header("Location: admin.php");
     exit();
 }else if(empty($case_id)){
-    header("Location: admin.php?error=Case ID is required&$user_data");
+    $_SESSION['error'] = "Case ID is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($teacher)){
-    header("Location: admin.php?error=Teacher ID is required&$user_data");
+    $_SESSION['error'] = "Teacher ID is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($date)){
-    header("Location: admin.php?error=Date is required&$user_data");
+    $_SESSION['error'] = "Date is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($parent)){
-    header("Location: admin.php?error=parent id is required&$user_data");
+    $_SESSION['error'] = "Parent id is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($infraction)){
-    header("Location: admin.php?error=Infraction is required&$user_data");
+    $_SESSION['error'] = "Infraction is required";
+    header("Location: admin.php");
     exit();
 }
 
 else if(empty($penalty)){
-    header("Location: admin.php?error=penalty is required&$user_data");
+    $_SESSION['error'] = "Penalty is required";
+    header("Location: admin.php");
     exit();
 }
 else{
@@ -99,15 +110,18 @@ else{
             $result2 = mysqli_query($con, $query2);
 
             if ($result2) {
-                header("Location: admin.php?error=Case Updated successfully&$user_data");
+                $_SESSION['error'] = "Case Updated successfully";
+                header("Location: admin.php");
                 exit();
             }else {
-                header("Location: admin.php?error=unknown error occurred&$user_data");
+                $_SESSION['error'] = "unknown error occurred";
+                header("Location: admin.php");
                 exit();
             }
 
         }else{
-            header("Location: admin.php?error=No such case found&$user_data");
+            $_SESSION['error'] = "No such case found";
+            header("Location: admin.php");
             exit();
         }
 

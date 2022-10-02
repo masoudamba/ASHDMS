@@ -2,7 +2,6 @@
 session_start();
 
 	include("Mydb.php");
-    include("function.php");
     
 if (isset($_POST['teacher']) && isset($_POST['student'])
 && isset($_POST['penalty']) && isset($_POST['action']) && isset($_POST['infraction'])) {
@@ -25,24 +24,31 @@ $infraction = validate($_POST['infraction']);
 
 
 
-$user_data = 'details='. $teacher;
+$user_data = '';
+$_SESSION['details'] = $teacher;
+$_SESSION['data'] = 'refresh';
 if (empty($teacher)) {
-    header("Location: teacher.php?error=Teacher id is required&$user_data");
+    $_SESSION['error'] = "Teacher id is required";
+    header("Location: teacher.php");
     exit();
 }else if(empty($student)){
-    header("Location: teacher.php?error=Student Reg id is required&$user_data");
+    $_SESSION['error'] = "Student Reg is required";
+    header("Location: teacher.php");
     exit();
 }
 else if(empty($action)){
-    header("Location: teacher.php?error=Action Taken is required&$user_data");
+    $_SESSION['error'] = "Action Taken s required";
+    header("Location: teacher.php");
     exit();
 }
 else if(empty($penalty)){
-    header("Location: teacher.php?error=Penalty is required&$user_data");
+    $_SESSION['error'] = "Penalty is required";
+    header("Location: teacher.php");
     exit();
 }
 else if(empty($infraction)){
-    header("Location: teacher.php?error=Infraction is required&$user_data");
+    $_SESSION['error'] = "Infraction  is required";
+    header("Location: teacher.php");
     exit();
 }
 else{
@@ -53,7 +59,8 @@ else{
 
     
     if (mysqli_num_rows($result) < 1) {
-        header("Location: teacher.php?error=Teacher not found&$user_data");
+        $_SESSION['error'] = "Teacher not found";
+        header("Location: teacher.php");
         exit();
     }else {
 
@@ -68,7 +75,8 @@ else{
             $resultParent2 = mysqli_query($con, $queryParent2);
 
             if(mysqli_num_rows($resultParent2) < 1){
-                header("Location: teacher.php?error=Parent not found&$user_data");
+                $_SESSION['error'] = "Parent not found";
+                header("Location: teacher.php");
                 exit();
             }else{
                 $resultParent = $resultParent2;
@@ -88,19 +96,23 @@ else{
                 VALUES('$parent', '$teacher', 'Pending','$infraction', '$penalty','$action','Pending','Pending','Pending')";
                 $result2 = mysqli_query($con, $query2);
                 if ($result2) {
-                    header("Location: teacher.php?error=Your case has been created successfully&$user_data");
+                    $_SESSION['error'] = "Your case has been reported successfully";
+                    header("Location: teacher.php");
                     exit();
                 }else {
-                    header("Location: teacher.php?error=unknown error occurred&$user_data");
+                    $_SESSION['error'] = "unknown error occurred";
+                    header("Location: teacher.php");
                     exit();
                 }
             } catch (\Throwable $th) {
                 //throw $th;
-                header("Location: teacher.php?error=unknown error occurred&$user_data");
+                $_SESSION['error'] = "unknown error occurred";
+                header("Location: teacher.php");
                 exit();
             }
         }else{
-            header("Location: teacher.php?error=Parent not found&$user_data");
+            $_SESSION['error'] = "Parent not found";
+            header("Location: teacher.php");
             exit();
         }
 
@@ -109,7 +121,8 @@ else{
 }
 	
 }else{
-	header("Location: teacher.php&$user_data");
+    $_SESSION['error'] = "unknown error occurred";
+    header("Location: teacher.php");
 	exit();
 }
 ?>

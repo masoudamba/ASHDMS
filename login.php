@@ -1,3 +1,23 @@
+<?php
+include("Mydb.php");
+session_start();
+
+try {
+  $roww = $_SESSION['details'];
+} catch (\Throwable $th) {
+  //throw $th;
+}
+// try {
+//   //code...
+//   session_abort();
+//   session_destroy();
+// } catch (\Throwable $th) {
+//   //throw $th;
+// }
+
+
+?>
+
 
 <!doctype html>
 <html>

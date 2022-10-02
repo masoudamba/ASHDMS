@@ -1,9 +1,16 @@
 <?php
 
 include("Mydb.php");
-include("function.php");
 
-$roww = $_GET['details'];
+session_start();
+
+$roww = 0;
+try {
+    $roww = $_SESSION['details'];
+} catch (\Throwable $th) {
+    //throw $th;
+}
+
 $error = "No Error";
 
 $teacherID = $roww;
@@ -33,6 +40,7 @@ $teacherID = $roww;
     //code...
     $qryPayment = mysqli_query($con, $sql_payment);   
    
+    
    while($tichaTeacher = mysqli_fetch_assoc($qryPayment)){
        
        $options_payment[$indexPayment] = $tichaTeacher;
@@ -105,19 +113,81 @@ $teacherID = $roww;
  $val_parents;
  $options_parents = array();
 
+ $options_payments_new = array();
+ $indexPaymentNew = 0;
+
  try {
     //code...
-    $qryParents = mysqli_query($con, $sql_parents);   
+    $qryParents = mysqli_query($con, $sql_parents);
+    $indexPayment = 0;   
    
    while($tichaParent = mysqli_fetch_assoc($qryParents)){
        
        $options_parents[$indexParent] = $tichaParent;
        $indexParent = $indexParent+1;
+
+       try {
+
+            foreach($options_payment as $payment){
+
+                try {
+                    //$payment = $options_payment[$i];
+
+                    $parent_name = "No Parent";
+                    $phone_number = "No number";
+                    $mpesa_receipt = "No receipt";
+                    $amount = "No payment";
+                    $status = "Not Paid";
+
+                    try {
+                        $phone_number = $payment['phone_number'];
+                        $mpesa_receipt = $payment['mpesa_receipt'];
+                        $amount = $payment['amount'];
+                        $status = $payment['status'];
+
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+
+                    try {
+                        //code...
+                        if($tichaParent['id']===$payment['parent_id']){
+                            $parent_name = $tichaParent['first_name']." ".$tichaParent['last_name'];
+    
+                            $new_array = array(
+                                "parent_name"=>$parent_name,
+                                "phone_number"=>$phone_number,
+                                "mpesa_receipt"=>$mpesa_receipt,
+                                "amount"=>$amount,
+                                "status"=>$status
+                            );
+                
+                            $options_payments_new[$indexPaymentNew] = $new_array;
+                            $indexPaymentNew = $indexPaymentNew+1;
+    
+                        }
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+
+                    
+                    
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                
+            }
+            
+       } catch (\Throwable $th) {
+        //throw $th;
+       }
        
    }
  } catch (\Throwable $th) {
     //throw $th;
  }
+
+ $options_payment = $options_payments_new;
 
  //sort students
  $indexStudent = 0;
@@ -261,17 +331,47 @@ $teacherID = $roww;
  }
 
 
+ if(isset($_SESSION['error'])){
+    try {
+        if($_SESSION['data']==='refresh'){
+            $error = $_SESSION['error'];
+            $_SESSION['data'] = 'stale';
+            $_SESSION['error'] = "No Error";
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+    //$error = $_SESSION['error'];
+    
+ }
  
- 
- 
+ if(isset($_SESSION['success'])){
+    try {
+        if($_SESSION['data']==='refresh'){
+            $error = $_SESSION['success'];
+            $_SESSION['data'] = 'stale';
+            $_SESSION['success'] = "No Error";
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+    //$error = $_SESSION['success'];
+ }
 
+ try {
+    session_write_close();
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
+ 
+/*
  if(isset($_GET['error'])){
     $error = $_GET['error'];
  }
  
  if(isset($_GET['success'])){
     $error = $_GET['success'];
- }
+ }*/
 
 ?>
 
@@ -1216,16 +1316,19 @@ display:none;
 
             var g = document.getElementById("form_new_case");
             var h = document.getElementById("the_cases");
+          
 
             showStudentProfiles(false);
             showBomProfiles(false);
             showPaymentProfiles(false);
+            showComProfiles(false);
 
 
             try {
                 if(selectedValue){
                     g.style.display = "block";
                     h.style.display = "none";
+                   
 
                     var t_id = document.getElementById("teacher_no");
                     t_id.value = ID_user;
@@ -1514,6 +1617,7 @@ display:none;
         //Column 1    
         var cell2 = row.insertCell(0);  
         cell2.innerHTML = rowCount + 1;  
+
         //Column 2  
         var cell3 = row.insertCell(1);  
         var element3 = document.createElement("input");  
@@ -1522,19 +1626,26 @@ display:none;
         cell3.appendChild(element3);
 
         //Column 3  
+        var cell3 = row.insertCell(1);  
+        var element3 = document.createElement("input");  
+        element3.type = "text"; 
+        element3.setAttribute('disabled',true); 
+        cell3.appendChild(element3);
+
+        //Column 4  
         var cell3 = row.insertCell(2);  
         var element3 = document.createElement("input");  
         element3.type = "text";  
         element3.setAttribute('disabled',true); 
         cell3.appendChild(element3);
-        //Column 4  
+        //Column 5  
         var cell3 = row.insertCell(3);  
         var element3 = document.createElement("input");  
         element3.type = "text";
         element3.setAttribute('disabled',true);   
         cell3.appendChild(element3);
 
-        //Column 5 
+        //Column 6 
         var cell3 = row.insertCell(4);  
         var element3 = document.createElement("input");  
         element3.type = "text";
@@ -1620,15 +1731,18 @@ display:none;
                 var row = table.rows[rowCount];
               
                 stateus = "null";
+                
                 try {
-                    for (let index = 1; index <= 4; index++) {
+                    for (let index = 1; index <= 5; index++) {
                         if(index===1){
-                            stateus = rowdata['phone_number'];
+                            stateus = rowdata['parent_name'];
                         }else if(index===2){
-                            stateus = rowdata['mpesa_receipt'];
+                            stateus = rowdata['phone_number'];
                         }else if(index===3){
-                            stateus = rowdata['amount'];
+                            stateus = rowdata['mpesa_receipt'];
                         }else if(index===4){
+                            stateus = rowdata['amount'];
+                        }else if(index===5){
                             stateus = rowdata['status'];
                         } 
                         row.cells.item(index).firstChild.value=stateus;
@@ -1640,8 +1754,8 @@ display:none;
             });
         }catch(e){
             //
-            //alert(e);
-            console.log(e);
+            alert(e);
+            //console.log(e);
         }
 
         try {
@@ -1726,9 +1840,11 @@ display:none;
 
                 var g = document.getElementById("form_new_case");
                 var h = document.getElementById("the_cases");
+                var i = document.getElementById("committee_div");
 
                 g.style.display = "none";
                 h.style.display = "none";
+                i.style.display = "none";
 
                 
 
@@ -1965,31 +2081,32 @@ display:none;
         }
     }
 
+    
+    // function generatePDF() {
+    //     var doc = new jsPDF();  //create jsPDF object
+    //     doc.fromHTML(document.getElementById("popup"), // page element which you want to print as PDF
+    //         15,
+    //         15, 
+    //         {
+    //             'width': 370  //set width
+    //         },
+    //         function(a) 
+    //         {
+    //             doc.save("HTML2PDF.pdf"); // save file name as HTML2PDF.pdf
+    //     });
+    // }
+    
 
-    function generatePDF() {
-        var doc = new jsPDF();  //create jsPDF object
-        doc.fromHTML(document.getElementById("popup"), // page element which you want to print as PDF
-            15,
-            15, 
-            {
-                'width': 370  //set width
-            },
-            function(a) 
-            {
-                doc.save("HTML2PDF.pdf"); // save file name as HTML2PDF.pdf
-        });
-    }
+    // function downloadPdf(){
 
-    function downloadPdf(){
-
-        try {
+    //     try {
             
 
-        } catch (error) {
-            console.log(error);
-        }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-    }
+    // }
 
 </script>
 <link rel="stylesheet" href="css/123.css"/>
@@ -2021,8 +2138,6 @@ display:none;
 
             
         </div>
-            <button type="button" onclick="download('admin.php')">Download Report</button>
-            <button type="button" onclick="generatePDF()">Download PDF Report</button>
         </div>
         <nav>
             <a href="#" class="logo">
@@ -2213,6 +2328,7 @@ display:none;
                 <TABLE id="payment_profiles" width="100%" bgcolor="white" border="1" bordercolor="black">
                     <TR>
                         <TD>No.</TD>
+                        <TD> Parent Name</TD>
                         <TD> Phone</TD>
                         <TD> Mpesa_receipt</TD>
                         <TD>Amount</TD> 

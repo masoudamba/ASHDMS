@@ -2,7 +2,6 @@
 session_start();
 
 	include("Mydb.php");
-    include("function.php");
     
 if (isset($_POST['bom_FName']) && isset($_POST['bom_LName'])
 && isset($_POST['bom_email']) && isset($_POST['position']) && isset($_POST['uname']) && isset($_POST['psw'])) {
@@ -26,32 +25,41 @@ $psw= validate($_POST['psw']);
 
 $teacher = $_POST['teacher_bom_id'];
 
-$user_data = 'details='. $teacher;
+$user_data = '';
+$_SESSION['details'] = $teacher;
+$_SESSION['data'] = 'refresh';
 if (empty($teacher)) {
-    header("Location: admin.php?error=Admin id is required&$user_data");
+    $_SESSION['error'] = "Admin id is required";
+    header("Location: admin.php");
     exit();
 }else if(empty($bom_FName)){
-    header("Location: admin.php?error=Bom First Name is required&$user_data");
+    $_SESSION['error'] = "Bom First Name is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($bom_LName)){
-    header("Location: admin.php?error=Bom Last Name is required&$user_data");
+    $_SESSION['error'] = "Bom Last Name is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($bom_email)){
-    header("Location: admin.php?error=Bom email is required&$user_data");
+    $_SESSION['error'] = "Bom email is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($position)){
-    header("Location: admin.php?error=Bom position is required&$user_data");
+    $_SESSION['error'] = "Bom position is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($uname)){
-    header("Location: admin.php?error=Bom username is required&$user_data");
+    $_SESSION['error'] = "Bom username is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($psw)){
-    header("Location: admin.php?error=password position is required&$user_data");
+    $_SESSION['error'] = "Bom position is required";
+    header("Location: admin.php");
     exit();
 }
 
@@ -64,7 +72,8 @@ else{
 
     
     if (mysqli_num_rows($result) < 1) {
-        header("Location: admin.php?error=Admin not found&$user_data");
+        $_SESSION['error'] = "Admin not found";
+        header("Location: admin.php");
         exit();
     }else {
 
@@ -74,15 +83,17 @@ else{
             VALUES('$bom_FName', '$bom_LName', '$bom_email','BOM','$position','$uname','$psw')";
             $result2 = mysqli_query($con, $query2);
             if ($result2) {
-                header("Location: admin.php?success=BOM has been created successfully&$user_data");
+                $_SESSION['success'] = "BOM has been created successfully";
+                header("Location: admin.php");
                 exit();
             }else {
-                header("Location: admin.php?error=unknown error occurred&$user_data");
+                $_SESSION['error'] = "unknown error occurred";
+                header("Location: admin.php");
                 exit();
             }
         } catch (\Throwable $th) {
-            
-            header("Location: admin.php?error=unknown error occurred&$user_data");
+            $_SESSION['error'] = "unknown error occurred";
+            header("Location: admin.php");
             exit();
         }
 
@@ -91,7 +102,8 @@ else{
 }
 	
 }else{
-	header("Location: admin.php&$user_data");
+    $_SESSION['error'] = "unknown error occurred";
+    header("Location: admin.php");
 	exit();
 }
 ?>

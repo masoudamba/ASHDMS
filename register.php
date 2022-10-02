@@ -1,11 +1,13 @@
 <?php
 
 include("Mydb.php");
-include("function.php");
+
 
 $error = "No Error";
 
  $sql_cases = "SELECT * FROM students";
+
+ $sql_parent = "SELECT * FROM parents";
 
 
  $qry1 = mysqli_query($con, $sql_cases);
@@ -20,6 +22,23 @@ $error = "No Error";
 
 $validExecute = false;
 
+$option_parents = array();
+$indexParent = 0;
+
+try {
+  $qryParents = mysqli_query($con, $sql_parent);
+  if((mysqli_num_rows($qryParents)) > 0){
+
+    while($tichaP = mysqli_fetch_assoc($qryParents)){
+      $option_parents[$indexParent] = $tichaP;
+      $indexParent = $indexParent+1;
+    }
+  }
+  
+} catch (\Throwable $th) {
+  //throw $th;
+}
+
 //get students details
 try {
     //code...
@@ -27,8 +46,32 @@ try {
       $validExecute = true;
 
       while($ticha = mysqli_fetch_assoc($qry1)){
-        $options[$index] = $ticha;
-        $index = $index+1;
+
+        $studentAbsent = true;
+        try {
+
+          foreach($option_parents as $theParent){
+
+            if($theParent['student_reg_no']===$ticha['regNo']){
+              $studentAbsent = false;
+              break;
+            }else if($theParent['student_reg_no2']===$ticha['regNo']){
+                $studentAbsent = false;
+                break;
+            }else{
+              continue;
+            }
+          }
+          
+        } catch (\Throwable $th) {
+          //throw $th;
+        }
+
+        if($studentAbsent){
+          $options[$index] = $ticha;
+          $index = $index+1;
+        }
+        
       }
     }
  } catch (\Throwable $th) {

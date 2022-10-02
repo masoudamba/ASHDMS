@@ -2,7 +2,6 @@
 session_start();
 
 	include("Mydb.php");
-    include("function.php");
     
 if (isset($_POST['regNo']) && isset($_POST['student_FName'])
 && isset($_POST['student_LName']) && isset($_POST['student_form'])) {
@@ -23,24 +22,31 @@ $student_form = validate($_POST['student_form']);
 
 $teacher = $_POST['teacher'];
 
-$user_data = 'details='. $teacher;
+$user_data = '';
+$_SESSION['details'] = $teacher;
+$_SESSION['data'] = 'refresh';
 if (empty($teacher)) {
-    header("Location: admin.php?error=Admin id is required&$user_data");
+    $_SESSION['error'] = "Admin id is required";
+    header("Location: admin.php");
     exit();
 }else if(empty($regNo)){
-    header("Location: admin.php?error=Student Reg No is required&$user_data");
+    $_SESSION['error'] = "Student Reg No is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($student_fName)){
-    header("Location: admin.php?error=Student First Name is required&$user_data");
+    $_SESSION['error'] = "Student First Name is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($student_lName)){
-    header("Location: admin.php?error=Student Last Name is required&$user_data");
+    $_SESSION['error'] = "Student Last Name is required";
+    header("Location: admin.php");
     exit();
 }
 else if(empty($student_form)){
-    header("Location: admin.php?error=student form is required&$user_data");
+    $_SESSION['error'] = "Student form is required";
+    header("Location: admin.php");
     exit();
 }
 else{
@@ -51,7 +57,8 @@ else{
 
     
     if (mysqli_num_rows($result) < 1) {
-        header("Location: admin.php?error=Admin not found&$user_data");
+        $_SESSION['error'] = "Admin not found";
+        header("Location: admin.php");
         exit();
     }else {
 
@@ -61,15 +68,18 @@ else{
             VALUES('$student_fName', '$student_lName', '$student_form','$regNo')";
             $result2 = mysqli_query($con, $query2);
             if ($result2) {
-                header("Location: admin.php?success=Student has been created successfully&$user_data");
+                $_SESSION['error'] = "Student has been created successfully";
+                header("Location: admin.php");
                 exit();
             }else {
-                header("Location: admin.php?error=unknown error occurred&$user_data");
+                $_SESSION['error'] = "unknown error occurred";
+                header("Location: admin.php");
                 exit();
             }
         } catch (\Throwable $th) {
             
-            header("Location: admin.php?error=unknown error occurred&$user_data");
+            $_SESSION['error'] = "unknown error occurred";
+            header("Location: admin.php");
             exit();
         }
 
@@ -78,7 +88,8 @@ else{
 }
 	
 }else{
-	header("Location: admin.php&$user_data");
+    $_SESSION['error'] = "unknown error occurred";
+    header("Location: admin.php");
 	exit();
 }
 ?>

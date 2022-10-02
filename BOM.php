@@ -1,9 +1,16 @@
 <?php
 
 include("Mydb.php");
-include("function.php");
 
-$roww = $_GET['details'];
+
+//$roww = $_GET['details'];
+
+session_start();
+try {
+    $roww = $_SESSION['details'];
+} catch (\Throwable $th) {
+    //throw $th;
+}
 $error = "No Error";
 
 $teacherID = $roww;
@@ -307,16 +314,48 @@ $teacherID = $roww;
  }
 
  
+ if(isset($_SESSION['error'])){
+    try {
+        if($_SESSION['data']==='refresh'){
+            $error = $_SESSION['error'];
+            $_SESSION['data'] = 'stale';
+            $_SESSION['error'] = "No Error";
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+    //$error = $_SESSION['error'];
+    
+ }
+ 
+ if(isset($_SESSION['success'])){
+    try {
+        if($_SESSION['data']==='refresh'){
+            $error = $_SESSION['success'];
+            $_SESSION['data'] = 'stale';
+            $_SESSION['success'] = "No Error";
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+    //$error = $_SESSION['success'];
+ }
+
+ try {
+    session_write_close();
+ } catch (\Throwable $th) {
+    //throw $th;
+ }
  
 
-
+/*
  if(isset($_GET['error'])){
     $error = $_GET['error'];
  }
  
  if(isset($_GET['success'])){
     $error = $_GET['success'];
- }
+ }*/
 
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 
 include("Mydb.php");
-include("function.php");
+
 
 $User = "Admin";
 $Stud ="stud";

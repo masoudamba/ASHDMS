@@ -4,7 +4,9 @@ session_start();
 
 	include("Mydb.php");
 	
-
+    $_SESSION['data']='refresh';
+    $_SESSION['success']='No Error';
+    $_SESSION['error']='No Error';
 
     if (isset($_POST['uname']) && isset($_POST['psw']) && isset($_POST['role'])) {
 
@@ -59,13 +61,17 @@ session_start();
                         $idd = $row['id'];
                         $row_encoded = json_encode($row);
                         if($row['role'] === 'Teacher'){
-                            header("Location: teacher.php?details='$idd'");
+                            $_SESSION['details']=$idd;
+                            header("Location: teacher.php");
                         }else if($row['role']==='Admin'){
-                            header("Location: admin.php?details='$idd'");
+                            $_SESSION['details']=$idd;
+                            header("Location: admin.php");
                         }else if($row['role']==='BOM'){
-                            header("Location: BOM.php?details='$idd'");
+                            $_SESSION['details']=$idd;
+                            header("Location: BOM.php");
                         }else if($row['role']==='Committee'){
-                            header("Location: committee.php?details='$idd'");
+                            $_SESSION['details']=$idd;
+                            header("Location: committee.php");
                         }else{
                             header("Location: parent.php");
                         }

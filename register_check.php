@@ -2,7 +2,6 @@
 session_start();
 
 	include("Mydb.php");
-    include("function.php");
     
 if (isset($_POST['uname']) && isset($_POST['psw'])
 && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['role']) 
